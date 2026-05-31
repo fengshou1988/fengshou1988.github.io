@@ -985,10 +985,27 @@
       "bankUser": "家宇",
       "bankRemark": "成都农信社",
       "address": "贵州省 遵义市 习水县 中华西路545号"
+    },
+    {
+      "id": "1780232407141",
+      "date": "2026-05-31",
+      "name": "赖桂萍",
+      "nick": "半生从容半生安",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "14732928246",
+      "area": "甘肃省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "622291224016225356",
+      "bankName": "柳州市",
+      "bankUser": "赖桂萍",
+      "bankRemark": "柳州市商业银行",
+      "address": "甘肃省 兰州市 永登县 金华路876号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:58:56"
+  "updatedAt": "2026/5/31 21:00:07"
 }
