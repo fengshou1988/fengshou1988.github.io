@@ -1053,10 +1053,27 @@
       "bankUser": "雄林",
       "bankRemark": "星展银行",
       "address": "河北省 承德市 兴隆县 盐城路506号"
+    },
+    {
+      "id": "1780232684781",
+      "date": "2026-05-31",
+      "name": "俞国辉",
+      "nick": "人间烟火暖人心",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "18341831902",
+      "area": "福建省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "6223190032639988",
+      "bankName": "山东",
+      "bankUser": "俞国辉",
+      "bankRemark": "山东农村信用联合社",
+      "address": "福建省 福州市 闽侯县 泰州路479号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:03:31"
+  "updatedAt": "2026/5/31 21:04:44"
 }
