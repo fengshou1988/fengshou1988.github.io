@@ -628,10 +628,27 @@
       "bankUser": "刘艾文",
       "bankRemark": "徽商银行淮北分行",
       "address": "河北省 邢台市 南和县 人民西路699号"
+    },
+    {
+      "id": "1780229303331",
+      "date": "2026-05-31",
+      "name": "杨冬雪",
+      "nick": "清风与我",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "16250889715",
+      "area": "河北省",
+      "group": "大群",
+      "status": "虚拟",
+      "bankCard": "1857203646287526",
+      "bankName": "河北省",
+      "bankUser": "杨冬雪",
+      "bankRemark": "昆明农联社",
+      "address": "河北省 保定市 容城县 解放路977号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:07:20"
+  "updatedAt": "2026/5/31 20:08:23"
 }
