@@ -675,7 +675,7 @@
       "group": "大群",
       "status": "虚拟",
       "bankCard": "6223129779614937",
-      "bankName": "湖南省",
+      "bankName": "徐州市",
       "bankUser": "项春林",
       "bankRemark": "徐州市郊农村信用合作联社",
       "address": "湖南省 邵阳市 洞口县 龙山路162号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:12:39"
+  "updatedAt": "2026/5/31 21:12:49"
 }
