@@ -679,10 +679,27 @@
       "bankUser": "项春林",
       "bankRemark": "徐州市郊农村信用合作联社",
       "address": "湖南省 邵阳市 洞口县 龙山路162号"
+    },
+    {
+      "id": "1780229565211",
+      "date": "2026-05-31",
+      "name": "吕雨晴",
+      "nick": "云间书信",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "14903424650",
+      "area": "安徽省",
+      "group": "大群",
+      "status": "虚拟",
+      "bankCard": "6223381569669315611",
+      "bankName": "安徽省",
+      "bankUser": "吕雨晴",
+      "bankRemark": "焦作市商业银行",
+      "address": "安徽省 阜阳市 涡阳县 紫薇南路866号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:10:36"
+  "updatedAt": "2026/5/31 20:12:45"
 }
