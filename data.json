@@ -611,10 +611,27 @@
       "bankUser": "蓝默",
       "bankRemark": "顺德农信社",
       "address": "湖南省 张家界市 桑植县 沣惠北路180号"
+    },
+    {
+      "id": "1780229240068",
+      "date": "2026-05-31",
+      "name": "刘艾文",
+      "nick": "雾里藏星",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "15956699250",
+      "area": "河北省",
+      "group": "大群",
+      "status": "虚拟",
+      "bankCard": "62234054452719441",
+      "bankName": "河北省",
+      "bankUser": "刘艾文",
+      "bankRemark": "徽商银行淮北分行",
+      "address": "河北省 邢台市 南和县 人民西路699号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:06:24"
+  "updatedAt": "2026/5/31 20:07:20"
 }
