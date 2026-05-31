@@ -896,7 +896,7 @@
       "group": "小群",
       "status": "虚拟",
       "bankCard": "622331242641257125",
-      "bankName": "云南省",
+      "bankName": "天津市",
       "bankUser": "徐梦媛",
       "bankRemark": "天津市商业银行",
       "address": "云南省 曲靖市 师宗县 富强路937号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:14:08"
+  "updatedAt": "2026/5/31 21:14:27"
 }
