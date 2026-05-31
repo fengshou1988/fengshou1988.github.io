@@ -815,10 +815,27 @@
       "bankUser": "李元宗",
       "bankRemark": "交通银行",
       "address": "福建省 福州市 连江县 清河路877号"
+    },
+    {
+      "id": "1780231384391",
+      "date": "2026-05-31",
+      "name": "寸韩菲",
+      "nick": "啊寸哪",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "18624473695",
+      "area": "云南省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "62230893858502644",
+      "bankName": "云南省",
+      "bankUser": "寸韩菲",
+      "bankRemark": "昆明商业银行",
+      "address": "云南省 大理市 剑川县 沙溪镇寺登街"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:40:56"
+  "updatedAt": "2026/5/31 20:43:04"
 }
