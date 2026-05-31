@@ -15,7 +15,7 @@
             background: #e6f7ff;
             min-height: 100vh;
             color: #222;
-            padding-top: 80px; /* 给固定面板留位置 */
+            padding-top: 80px;
         }
         .table-wrap {
             overflow-x: auto;
@@ -55,7 +55,6 @@
             0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; }
         }
 
-        /* 🔥 固定令牌面板，永不抖动、永远不挤压页面 */
         #tokenPanel {
             position: fixed;
             top: 0;
@@ -66,19 +65,26 @@
             padding: 10px 15px;
             border-bottom: 1px solid #ddd;
         }
+        .sync-status {
+            font-size: 12px;
+            margin-top: 4px;
+            color: #555;
+        }
     </style>
 </head>
 <body class="bg-transparent">
 
-    <!-- 🔑 固定在顶部：令牌设置面板（默认显示，不抖动） -->
     <div id="tokenPanel" class="bg-white rounded shadow mb-4">
         <div class="font-bold mb-2">GitHub 云端同步令牌设置（仅自己可见）</div>
         <div class="flex gap-2 flex-wrap items-center">
             <input id="githubTokenInput" type="text" placeholder="粘贴你的 GitHub PAT 令牌" class="border px-3 py-2 rounded flex-1 min-w-[200px]">
             <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-3 py-2 rounded">保存令牌</button>
             <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-3 py-2 rounded">清除令牌</button>
+            <button onclick="testGitHubSync()" class="bg-blue-600 text-white px-3 py-2 rounded">测试同步</button>
+            <button onclick="manualPushToGitHub()" class="bg-purple-600 text-white px-3 py-2 rounded">手动同步</button>
         </div>
         <div class="text-xs text-gray-500 mt-1">令牌仅保存在本地浏览器，不会上传到仓库</div>
+        <div id="syncStatus" class="sync-status text-sm">同步状态：未设置令牌</div>
     </div>
 
     <div class="container mx-auto px-3 py-5 max-w-7xl">
@@ -114,7 +120,6 @@
                 </select>
                 <button onclick="renderList()" class="bg-blue-500 text-white px-4 py-2 rounded">搜索查询</button>
                 <button onclick="resetFilter()" class="bg-gray-500 text-white px-4 py-2 rounded">重置</button>
-                <!-- 黄色按钮：设置同步令牌 -->
                 <button onclick="toggleTokenPanel()" class="bg-yellow-500 text-white px-3 py-2 rounded">设置同步令牌</button>
             </div>
         </div>
@@ -325,9 +330,9 @@
             });
             document.getElementById('importExcel').onchange = importExcelData;
             loadGitHubToken();
+            updateSyncStatus();
         }
 
-        // 显示/隐藏令牌面板（现在是固定顶栏，不抖动）
         function toggleTokenPanel() {
             const panel = document.getElementById('tokenPanel');
             panel.classList.toggle('hidden');
@@ -742,7 +747,6 @@
         function closeLogModal(){document.getElementById('logModal').classList.add('hidden');}
     </script>
 
-    <!-- 🔥 安全云端同步引擎（无明文Token） -->
     <script>
     const GITHUB_CONFIG = {
       OWNER: "fengshou1988",
@@ -752,27 +756,34 @@
     };
 
     let GITHUB_TOKEN = "";
-    let CLOUD_SYNC_READY = false;
     let isSyncing = false;
     let currentFileSha = undefined;
 
-    // 安全 Token 存储
+    function updateSyncStatus(msg) {
+        const el = document.getElementById('syncStatus');
+        if (msg) el.innerHTML = `同步状态：${msg}`;
+        else el.innerHTML = GITHUB_TOKEN ? "同步状态：已设置令牌，等待同步" : "同步状态：未设置令牌";
+    }
+
     function saveGitHubToken() {
         const val = document.getElementById('githubTokenInput').value.trim();
         if (!val) return alert('请输入令牌');
         localStorage.setItem('GITHUB_TOKEN_SECURE', val);
         GITHUB_TOKEN = val;
+        updateSyncStatus("令牌已保存 ✅");
         alert('✅ 令牌已保存到本地浏览器');
     }
 
     function loadGitHubToken() {
         GITHUB_TOKEN = localStorage.getItem('GITHUB_TOKEN_SECURE') || "";
+        document.getElementById('githubTokenInput').value = GITHUB_TOKEN;
     }
 
     function clearGitHubToken() {
         localStorage.removeItem('GITHUB_TOKEN_SECURE');
         GITHUB_TOKEN = "";
         document.getElementById('githubTokenInput').value = "";
+        updateSyncStatus("令牌已清除");
         alert('✅ 令牌已清除');
     }
 
@@ -792,12 +803,19 @@
         localStorage.setItem('flowData', JSON.stringify(data.flowRecord || []));
         localStorage.setItem('positionData', JSON.stringify(data.positionRecord || []));
         localStorage.setItem('signUsers', JSON.stringify(data.signUsers || {}));
+        customer = JSON.parse(localStorage.getItem('customerData')) || [];
+        flowRecord = JSON.parse(localStorage.getItem('flowData')) || [];
+        positionRecord = JSON.parse(localStorage.getItem('positionData')) || [];
+        signUsers = JSON.parse(localStorage.getItem('signUsers')) || {};
+        countTotalData();
+        renderList();
         console.log("✅ 云端数据已同步到本地");
       } catch (e) {}
     }
 
     async function pullFromGitHub() {
       if (!GITHUB_TOKEN) return;
+      updateSyncStatus("正在从云端拉取...");
       try {
         const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}?ref=${GITHUB_CONFIG.BRANCH}`;
         const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
@@ -807,8 +825,10 @@
         const data = JSON.parse(decoded);
         saveAllDataToLocal(data);
         currentFileSha = json.sha;
+        updateSyncStatus("拉取云端数据成功 ✅");
         return true;
       } catch (e) {
+        updateSyncStatus("云端暂无数据，可直接同步");
         console.log("ℹ️ 云端暂无数据");
         return false;
       }
@@ -817,9 +837,10 @@
     async function pushToGitHub() {
       if (!GITHUB_TOKEN || isSyncing) return;
       isSyncing = true;
+      updateSyncStatus("正在同步到云端...");
       try {
         const data = getAllLocalData();
-        const content = btoa(JSON.stringify(data, null, 2));
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
         const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`;
         
         const body = {
@@ -842,19 +863,44 @@
         const result = await res.json();
         if (result.content) {
           currentFileSha = result.content.sha;
+          updateSyncStatus("同步成功 ✅");
           console.log("✅ 数据已同步到 GitHub");
         }
       } catch (e) {
+        updateSyncStatus("同步失败 ❌");
         console.error("同步失败", e);
       }
       isSyncing = false;
     }
 
-    // 页面加载后自动拉取云端数据
+    async function manualPushToGitHub() {
+        if (!GITHUB_TOKEN) return alert("请先保存令牌");
+        await pushToGitHub();
+        alert("手动同步完成！");
+    }
+
+    async function testGitHubSync() {
+        if (!GITHUB_TOKEN) return alert("请先保存令牌");
+        updateSyncStatus("测试连接中...");
+        try {
+            const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}`;
+            const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
+            if (res.ok) {
+                updateSyncStatus("连接测试成功 ✅");
+                alert("✅ GitHub 连接测试成功！令牌有效");
+            } else {
+                updateSyncStatus("测试失败：令牌或权限错误");
+                alert("❌ 测试失败：令牌无效或无仓库权限");
+            }
+        } catch (e) {
+            updateSyncStatus("测试失败：网络错误");
+            alert("❌ 测试失败：网络异常");
+        }
+    }
+
     window.addEventListener('load', async () => {
       await pullFromGitHub();
       
-      // 监听数据变化自动同步
       const originalSetItem = localStorage.setItem;
       localStorage.setItem = function(key, value) {
         originalSetItem.call(this, key, value);
