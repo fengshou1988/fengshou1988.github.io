@@ -968,10 +968,27 @@
       "bankUser": "宁学源",
       "bankRemark": "中信实业银行",
       "address": "辽宁省 抚顺市 抚顺县 文锋路551号"
+    },
+    {
+      "id": "1780232336094",
+      "date": "2026-05-31",
+      "name": "家宇",
+      "nick": "从容淡定",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "18327969299",
+      "area": "贵州省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "6223453586078029172",
+      "bankName": "贵州省",
+      "bankUser": "家宇",
+      "bankRemark": "成都农信社",
+      "address": "贵州省 遵义市 习水县 中华西路545号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:57:48"
+  "updatedAt": "2026/5/31 20:58:56"
 }
