@@ -832,10 +832,27 @@
       "bankUser": "寸韩菲",
       "bankRemark": "昆明商业银行",
       "address": "云南省 大理市 剑川县 沙溪镇寺登街"
+    },
+    {
+      "id": "1780231502839",
+      "date": "2026-05-31",
+      "name": "孟庆勇",
+      "nick": "安之若素",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "14379522653",
+      "area": "吉林省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "6221271274236766035",
+      "bankName": "吉林省",
+      "bankUser": "孟庆勇",
+      "bankRemark": "农村信用社联合社",
+      "address": "吉林省 白山市 江源县 柳仓路314号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:43:04"
+  "updatedAt": "2026/5/31 20:45:02"
 }
