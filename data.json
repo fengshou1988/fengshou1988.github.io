@@ -560,10 +560,27 @@
       "bankUser": "宋海奇",
       "bankRemark": "农村信用合作联社",
       "address": "河北省 保定市 满城县 长坪路642号"
+    },
+    {
+      "id": "1780229058196",
+      "date": "2026-05-31",
+      "name": "张美桂",
+      "nick": "山野雾漫",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "19901016632",
+      "area": "湖南省",
+      "group": "大群",
+      "status": "虚拟",
+      "bankCard": "4427296007883607",
+      "bankName": "湖南省",
+      "bankUser": "张美桂",
+      "bankRemark": "中信实业银行",
+      "address": "湖南省 衡阳市 衡东县 民建路364号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:02:57"
+  "updatedAt": "2026/5/31 20:04:18"
 }
