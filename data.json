@@ -764,10 +764,27 @@
       "bankUser": "润菲",
       "bankRemark": "包头市商业银行",
       "address": "安徽省 安庆市 太湖县 滨河路881号"
+    },
+    {
+      "id": "1780231011880",
+      "date": "2026-05-31",
+      "name": "潘恬恬",
+      "nick": "长安旧梦",
+      "channel": "起飞",
+      "reception": "毅晨",
+      "phone": "13462087719",
+      "area": "山东省",
+      "group": "备用",
+      "status": "虚拟",
+      "bankCard": "8880006216343827",
+      "bankName": "山东省",
+      "bankUser": "潘恬恬",
+      "bankRemark": "贵阳市商业银行",
+      "address": "山东省 德州市平原县 机场路900号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:35:45"
+  "updatedAt": "2026/5/31 20:36:51"
 }
