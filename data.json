@@ -1121,10 +1121,27 @@
       "bankUser": "叶兆言",
       "bankRemark": "东莞市商业银行",
       "address": "河北省 沧州市 东光县 东环路756号"
+    },
+    {
+      "id": "1780232963416",
+      "date": "2026-05-31",
+      "name": "石秀秀",
+      "nick": "虚怀若谷",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "18864180782",
+      "area": "黑龙江省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "62233239543464880",
+      "bankName": "张家港市",
+      "bankUser": "石秀秀",
+      "bankRemark": "张家港市农村商业银行",
+      "address": "黑龙江省 佳木斯市 汤原县 解放路505号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:08:20"
+  "updatedAt": "2026/5/31 21:09:23"
 }
