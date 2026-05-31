@@ -883,10 +883,27 @@
       "bankUser": "倪骞",
       "bankRemark": "工商银行",
       "address": "湖南省 长沙市 长沙县 辽宁路664号"
+    },
+    {
+      "id": "1780231760190",
+      "date": "2026-05-31",
+      "name": "徐梦媛",
+      "nick": "厚德载物",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "14968866261",
+      "area": "云南省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "622331242641257125",
+      "bankName": "云南省",
+      "bankUser": "徐梦媛",
+      "bankRemark": "天津市商业银行",
+      "address": "云南省 曲靖市 师宗县 富强路937号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:48:04"
+  "updatedAt": "2026/5/31 20:49:20"
 }
