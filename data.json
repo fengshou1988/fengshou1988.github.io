@@ -624,7 +624,7 @@
       "group": "大群",
       "status": "虚拟",
       "bankCard": "62234054452719441",
-      "bankName": "河北省",
+      "bankName": "淮北",
       "bankUser": "刘艾文",
       "bankRemark": "徽商银行淮北分行",
       "address": "河北省 邢台市 南和县 人民西路699号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:11:56"
+  "updatedAt": "2026/5/31 21:12:15"
 }
