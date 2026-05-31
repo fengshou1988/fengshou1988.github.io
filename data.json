@@ -658,7 +658,7 @@
       "group": "大群",
       "status": "虚拟",
       "bankCard": "6223398597250923",
-      "bankName": "湖北省",
+      "bankName": "鄞州",
       "bankUser": "李育浩",
       "bankRemark": "鄞州农村合作银行",
       "address": "湖北省 十堰市 郧西县 凤仪东路55号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:12:15"
+  "updatedAt": "2026/5/31 21:12:30"
 }
