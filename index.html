@@ -59,6 +59,17 @@
     <div class="container mx-auto px-3 py-5 max-w-7xl">
         <h1 class="text-[68px] font-bold text-center mb-10" style="font-family:'华文行楷',sans-serif; color: #111;">🪙 丰收信息系统 🪙</h1>
 
+        <!-- 🔑 安全 Token 设置面板（默认隐藏） -->
+        <div id="tokenPanel" class="bg-white rounded shadow p-4 mb-4 hidden">
+            <div class="font-bold mb-2">GitHub 云端同步令牌设置（仅自己可见）</div>
+            <div class="flex gap-2 flex-wrap">
+                <input id="githubTokenInput" type="text" placeholder="粘贴你的 GitHub PAT 令牌" class="border px-3 py-2 rounded flex-1 min-w-[200px]">
+                <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-3 py-2 rounded">保存令牌</button>
+                <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-3 py-2 rounded">清除令牌</button>
+            </div>
+            <div class="text-xs text-gray-500 mt-1">令牌仅保存在本地浏览器，不会上传到仓库</div>
+        </div>
+
         <div class="bg-white rounded shadow p-4 mb-4 grid grid-cols-2 md:grid-cols-5 gap-3 text-center">
             <div>总客户数<br><span id="totalCustomer" class="text-lg font-bold text-blue-600">0</span></div>
             <div>累计充值总额<br><span id="totalRecharge" class="text-lg font-bold text-blue-600">0.00</span></div>
@@ -89,6 +100,8 @@
                 </select>
                 <button onclick="renderList()" class="bg-blue-500 text-white px-4 py-2 rounded">搜索查询</button>
                 <button onclick="resetFilter()" class="bg-gray-500 text-white px-4 py-2 rounded">重置</button>
+                <!-- 黄色按钮：设置同步令牌 -->
+                <button onclick="toggleTokenPanel()" class="bg-yellow-500 text-white px-3 py-2 rounded">设置同步令牌</button>
             </div>
         </div>
 
@@ -297,6 +310,13 @@
                 document.getElementById('customStatus').classList.toggle('hidden', this.value != 'custom');
             });
             document.getElementById('importExcel').onchange = importExcelData;
+            loadGitHubToken();
+        }
+
+        // 显示/隐藏令牌设置面板
+        function toggleTokenPanel() {
+            const panel = document.getElementById('tokenPanel');
+            panel.classList.toggle('hidden');
         }
 
         function initReceptionSelect() {
@@ -708,99 +728,82 @@
         function closeLogModal(){document.getElementById('logModal').classList.add('hidden');}
     </script>
 
-<!-- 🔥 全自动 GitHub 云端同步引擎（已填好你的信息） -->
-<script>
-const GITHUB_CONFIG = {
-  OWNER: "fengshou1988",
-  REPO: "fengshou1988.github.io",
-  BRANCH: "main",
-  TOKEN: "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",
-  FILE_PATH: "data.json"
-};
-
-let CLOUD_SYNC_READY = false;
-let isSyncing = false;
-
-function getAllLocalData() {
-  return {
-    customer: JSON.parse(localStorage.getItem('customerData') || '[]'),
-    flowRecord: JSON.parse(localStorage.getItem('flowData') || '[]'),
-    positionRecord: JSON.parse(localStorage.getItem('positionData') || '[]'),
-    signUsers: JSON.parse(localStorage.getItem('signUsers') || '{}'),
-    updatedAt: new Date().toLocaleString()
-  };
-}
-
-function saveAllDataToLocal(data) {
-  try {
-    localStorage.setItem('customerData', JSON.stringify(data.customer || []));
-    localStorage.setItem('flowData', JSON.stringify(data.flowRecord || []));
-    localStorage.setItem('positionData', JSON.stringify(data.positionRecord || []));
-    localStorage.setItem('signUsers', JSON.stringify(data.signUsers || {}));
-    console.log("✅ 从 GitHub 同步数据到本地成功");
-  } catch (e) {}
-}
-
-async function pullFromGitHub() {
-  if (!GITHUB_CONFIG.TOKEN) return;
-  try {
-    const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}?ref=${GITHUB_CONFIG.BRANCH}`;
-    const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_CONFIG.TOKEN}` } });
-    const json = await res.json();
-    if (!json.content) return;
-    const decoded = atob(json.content.replace(/\n/g, ''));
-    const data = JSON.parse(decoded);
-    saveAllDataToLocal(data);
-    window.currentFileSha = json.sha;
-    return true;
-  } catch (e) {
-    console.log("ℹ️ GitHub 暂无数据，使用本地数据");
-    return false;
-  }
-}
-
-async function pushToGitHub() {
-  if (!GITHUB_CONFIG.TOKEN || isSyncing) return;
-  isSyncing = true;
-  try {
-    const data = getAllLocalData();
-    const content = btoa(JSON.stringify(data, null, 2));
-    const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`;
-    const body = {
-      message: `💾 自动同步数据 ${new Date().toLocaleString()}`,
-      content: content,
-      branch: GITHUB_CONFIG.BRANCH,
-      sha: window.currentFileSha || undefined
+    <!-- 🔥 安全云端同步引擎（无明文Token） -->
+    <script>
+    const GITHUB_CONFIG = {
+      OWNER: "fengshou1988",
+      REPO: "fengshou1988.github.io",
+      BRANCH: "main",
+      FILE_PATH: "data.json"
     };
-    const res = await fetch(api, {
-      method: 'PUT',
-      headers: { Authorization: `token ${GITHUB_CONFIG.TOKEN}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
-    });
-    const result = await res.json();
-    if (result.content) {
-      window.currentFileSha = result.content.sha;
-      console.log("✅ 数据已自动同步到 GitHub");
+
+    let GITHUB_TOKEN = "";
+    let CLOUD_SYNC_READY = false;
+    let isSyncing = false;
+    let currentFileSha = undefined;
+
+    // 安全 Token 存储
+    function saveGitHubToken() {
+        const val = document.getElementById('githubTokenInput').value.trim();
+        if (!val) return alert('请输入令牌');
+        localStorage.setItem('GITHUB_TOKEN_SECURE', val);
+        GITHUB_TOKEN = val;
+        alert('✅ 令牌已保存到本地浏览器');
     }
-  } catch (e) {
-    console.error("❌ 同步失败", e);
-  } finally { isSyncing = false; }
-}
 
-async function initCloudSync() {
-  await pullFromGitHub();
-  CLOUD_SYNC_READY = true;
-  const originalSave = window.saveData;
-  window.saveData = function() {
-    originalSave?.call(this);
-    pushToGitHub();
-  };
-  console.log("🚀 GitHub 全自动同步已启动");
-}
+    function loadGitHubToken() {
+        GITHUB_TOKEN = localStorage.getItem('GITHUB_TOKEN_SECURE') || "";
+    }
 
-window.addEventListener('load', () => {
-  setTimeout(initCloudSync, 1000);
-});
-</script>
-</body>
-</html>
+    function clearGitHubToken() {
+        localStorage.removeItem('GITHUB_TOKEN_SECURE');
+        GITHUB_TOKEN = "";
+        document.getElementById('githubTokenInput').value = "";
+        alert('✅ 令牌已清除');
+    }
+
+    function getAllLocalData() {
+      return {
+        customer: JSON.parse(localStorage.getItem('customerData') || '[]'),
+        flowRecord: JSON.parse(localStorage.getItem('flowData') || '[]'),
+        positionRecord: JSON.parse(localStorage.getItem('positionData') || '[]'),
+        signUsers: JSON.parse(localStorage.getItem('signUsers') || '{}'),
+        updatedAt: new Date().toLocaleString()
+      };
+    }
+
+    function saveAllDataToLocal(data) {
+      try {
+        localStorage.setItem('customerData', JSON.stringify(data.customer || []));
+        localStorage.setItem('flowData', JSON.stringify(data.flowRecord || []));
+        localStorage.setItem('positionData', JSON.stringify(data.positionRecord || []));
+        localStorage.setItem('signUsers', JSON.stringify(data.signUsers || {}));
+        console.log("✅ 云端数据已同步到本地");
+      } catch (e) {}
+    }
+
+    async function pullFromGitHub() {
+      if (!GITHUB_TOKEN) return;
+      try {
+        const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}?ref=${GITHUB_CONFIG.BRANCH}`;
+        const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
+        const json = await res.json();
+        if (!json.content) return;
+        const decoded = atob(json.content.replace(/\n/g, ''));
+        const data = JSON.parse(decoded);
+        saveAllDataToLocal(data);
+        currentFileSha = json.sha;
+        return true;
+      } catch (e) {
+        console.log("ℹ️ 云端暂无数据");
+        return false;
+      }
+    }
+
+    async function pushToGitHub() {
+      if (!GITHUB_TOKEN || isSyncing) return;
+      isSyncing = true;
+      try {
+        const data = getAllLocalData();
+        const content = btoa(JSON.stringify(data, null, 2));
+        const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE
