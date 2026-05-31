@@ -74,18 +74,17 @@
 </head>
 <body class="bg-transparent">
 
-    <div id="tokenPanel" class="bg-white rounded shadow p-2 text-sm fixed right-3 top-3 w-[400px] z-9999">
-    <div class="flex justify-between items-center font-bold mb-1 text-base">
-        <span>GitHub同步令牌设置</span>
-        <span class="font-normal text-gray-500">同步状态：未设置 | 令牌仅本地保存</span>
-    </div>
+    <div id="tokenPanel" class="bg-white rounded shadow p-2 text-xs fixed right-3 top-3 z-9999 w-[380px]">
+    <div class="font-bold mb-1 text-sm">同步令牌设置</div>
     <div class="flex gap-1 flex-wrap items-center">
-        <input id="githubTokenInput" type="text" placeholder="GitHub PAT令牌" class="border px-2 py-1 rounded flex-1 min-w-[120px] text-sm">
-        <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-2 py-1 rounded text-sm">保存</button>
-        <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-2 py-1 rounded text-sm">清除</button>
-        <button onclick="testGitHubSync()" class="bg-blue-600 text-white px-2 py-1 rounded text-sm">测试</button>
-        <button onclick="manualPushToGitHub()" class="bg-purple-600 text-white px-2 py-1 rounded text-sm">同步</button>
+        <input id="githubTokenInput" type="text" placeholder="粘贴你的 GitHub PAT 令牌" class="border px-2 py-1 rounded flex-1 min-w-[350px] text-xs">
+        <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-2 py-1 rounded text-xs">保存令牌</button>
+        <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-2 py-1 rounded text-xs">清除令牌</button>
+        <button onclick="testGitHubSync()" class="bg-blue-600 text-white px-2 py-1 rounded text-xs">测试同步</button>
+        <button onclick="manualPushToGitHub()" class="bg-purple-600 text-white px-2 py-1 rounded text-xs">手动同步</button>
     </div>
+    <div class="text-xs text-gray-500 mt-1">令牌仅保存在本地浏览器，不会上传到仓库</div>
+    <div id="syncStatus" class="sync-status text-xs">同步状态：未设置令牌</div>
 </div>
 
     <div class="container mx-auto px-3 py-5 max-w-7xl">
