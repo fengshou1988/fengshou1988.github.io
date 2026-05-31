@@ -947,7 +947,7 @@
       "group": "小群",
       "status": "虚拟",
       "bankCard": "8704000072241005",
-      "bankName": "河北省",
+      "bankName": "上海",
       "bankUser": "陆梦琦",
       "bankRemark": "浦东发展银行",
       "address": "河北省 邯郸市 成安县 文化路587号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:14:27"
+  "updatedAt": "2026/5/31 21:14:46"
 }
