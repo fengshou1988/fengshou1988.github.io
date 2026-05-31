@@ -781,10 +781,27 @@
       "bankUser": "潘恬恬",
       "bankRemark": "贵阳市商业银行",
       "address": "山东省 德州市平原县 机场路900号"
+    },
+    {
+      "id": "1780231183175",
+      "date": "2026-05-31",
+      "name": "刘青藜",
+      "nick": "静水流深",
+      "channel": "起飞",
+      "reception": "毅晨",
+      "phone": "18135506777",
+      "area": "贵州省",
+      "group": "备用",
+      "status": "虚拟",
+      "bankCard": "4340629880807927",
+      "bankName": "贵州省",
+      "bankUser": "刘青藜",
+      "bankRemark": "建设银行",
+      "address": "贵州省 遵义市 湄潭县 长兴路486号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:36:51"
+  "updatedAt": "2026/5/31 20:39:43"
 }
