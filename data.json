@@ -1087,10 +1087,27 @@
       "bankUser": "陈庆菊",
       "bankRemark": "民生银行",
       "address": "黑龙江省 佳木斯市 抚远县 永昌路195号"
+    },
+    {
+      "id": "1780232844549",
+      "date": "2026-05-31",
+      "name": "杨平德",
+      "nick": "明德惟馨",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "16127097208",
+      "area": "福建省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "8880009805331971",
+      "bankName": "贵阳市",
+      "bankUser": "杨平德",
+      "bankRemark": "贵阳市商业银行",
+      "address": "福建省 漳州市 诏安县 人民路175号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:06:22"
+  "updatedAt": "2026/5/31 21:07:24"
 }
