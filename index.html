@@ -746,8 +746,8 @@
         function showLogRecord(){document.getElementById('logBox').innerText=operateLog.join('\n');document.getElementById('logModal').classList.remove('hidden');}
         function closeLogModal(){document.getElementById('logModal').classList.add('hidden');}
     </script>
-
-  <script>
+  
+<script>
 const GITHUB_CONFIG = {
   OWNER: "fengshou1988",
   REPO: "fengshou1988.github.io",
@@ -810,7 +810,9 @@ function saveAllDataToLocal(data) {
     countTotalData();
     renderList();
     console.log("✅ 云端数据已同步到本地");
-  } catch (e) {}
+  } catch (e) {
+    console.error("数据加载失败", e);
+  }
 }
 
 async function pullFromGitHub() {
@@ -821,7 +823,9 @@ async function pullFromGitHub() {
     const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
     const json = await res.json();
     if (!json.content) return;
-    const decoded = atob(json.content.replace(/\n/g, ''));
+    // 修复中文乱码的核心代码
+    const base64 = json.content.replace(/\n/g, '');
+    const decoded = decodeURIComponent(escape(atob(base64)));
     const data = JSON.parse(decoded);
     saveAllDataToLocal(data);
     currentFileSha = json.sha;
@@ -840,7 +844,9 @@ async function pushToGitHub() {
   updateSyncStatus("正在同步到云端...");
   try {
     const data = getAllLocalData();
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    // 修复中文乱码的核心代码
+    const jsonStr = JSON.stringify(data, null, 2);
+    const content = btoa(unescape(encodeURIComponent(jsonStr)));
     const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`;
     
     const body = {
@@ -879,15 +885,12 @@ async function manualPushToGitHub() {
     alert("手动同步完成！");
 }
 
-// 修复后的测试同步逻辑
 async function testGitHubSync() {
     if (!GITHUB_TOKEN) return alert("请先保存令牌");
     updateSyncStatus("测试连接中...");
     try {
-        // 改用读取文件接口测试，比仓库接口更稳定
         const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}?ref=${GITHUB_CONFIG.BRANCH}`;
         const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
-        // 404=文件不存在但令牌有效；200=文件存在且令牌有效；其他状态码=令牌无效
         if (res.ok || res.status === 404) {
             updateSyncStatus("连接测试成功 ✅");
             alert("✅ GitHub 连接测试成功！令牌有效");
@@ -918,6 +921,5 @@ window.addEventListener('load', async () => {
   };
 });
 </script>
-    </script>
 </body>
 </html>
