@@ -1070,10 +1070,27 @@
       "bankUser": "俞国辉",
       "bankRemark": "山东农村信用联合社",
       "address": "福建省 福州市 闽侯县 泰州路479号"
+    },
+    {
+      "id": "1780232782765",
+      "date": "2026-05-31",
+      "name": "陈庆菊",
+      "nick": "云淡风轻",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "18514408601",
+      "area": "黑龙江省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "4720677890692904",
+      "bankName": "黑龙江省",
+      "bankUser": "陈庆菊",
+      "bankRemark": "民生银行",
+      "address": "黑龙江省 佳木斯市 抚远县 永昌路195号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:04:44"
+  "updatedAt": "2026/5/31 21:06:22"
 }
