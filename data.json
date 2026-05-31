@@ -543,10 +543,27 @@
       "bankUser": "钟正良",
       "bankRemark": "中信银行",
       "address": "江西省新余市分宜县鸿兴路96号"
+    },
+    {
+      "id": "1780228977652",
+      "date": "2026-05-31",
+      "name": "宋海奇",
+      "nick": "晚风叙旧",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "18331066439",
+      "area": "河北省",
+      "group": "大群",
+      "status": "虚拟",
+      "bankCard": "6223121216118218",
+      "bankName": "河北省",
+      "bankUser": "宋海奇",
+      "bankRemark": "农村信用合作联社",
+      "address": "河北省 保定市 满城县 长坪路642号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:00:42"
+  "updatedAt": "2026/5/31 20:02:57"
 }
