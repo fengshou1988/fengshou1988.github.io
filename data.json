@@ -577,10 +577,27 @@
       "bankUser": "张美桂",
       "bankRemark": "中信实业银行",
       "address": "湖南省 衡阳市 衡东县 民建路364号"
+    },
+    {
+      "id": "1780229122556",
+      "date": "2026-05-31",
+      "name": "赵吉顺",
+      "nick": "月亮邮差",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "14618516750",
+      "area": "河北省",
+      "group": "大群",
+      "status": "虚拟",
+      "bankCard": "6223286453744155076",
+      "bankName": "河北省",
+      "bankUser": "赵吉顺",
+      "bankRemark": "农村信用合作社",
+      "address": "河北省 邯郸市 馆陶县 古城路280号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:04:18"
+  "updatedAt": "2026/5/31 20:05:22"
 }
