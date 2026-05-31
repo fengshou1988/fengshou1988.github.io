@@ -747,10 +747,27 @@
       "bankUser": "钟晓钰",
       "bankRemark": "宁波市商业银行",
       "address": "河源市 河源市 紫金县 灌婴路165号"
+    },
+    {
+      "id": "1780230945887",
+      "date": "2026-05-31",
+      "name": "润菲",
+      "nick": "清风挽月",
+      "channel": "起飞",
+      "reception": "毅晨",
+      "phone": "15440804568",
+      "area": "安徽省",
+      "group": "备用",
+      "status": "虚拟",
+      "bankCard": "62233685203213449",
+      "bankName": "安徽省",
+      "bankUser": "润菲",
+      "bankRemark": "包头市商业银行",
+      "address": "安徽省 安庆市 太湖县 滨河路881号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:34:41"
+  "updatedAt": "2026/5/31 20:35:45"
 }
