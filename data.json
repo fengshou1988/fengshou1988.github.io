@@ -730,10 +730,27 @@
       "bankUser": "杨承军",
       "bankRemark": "民生银行",
       "address": "四川省 乐山市 沐川县 滨河路846号"
+    },
+    {
+      "id": "1780230881280",
+      "date": "2026-05-31",
+      "name": "钟晓钰",
+      "nick": "快乐加载中",
+      "channel": "起飞",
+      "reception": "毅晨",
+      "phone": "17557585934",
+      "area": "河源市",
+      "group": "备用",
+      "status": "虚拟",
+      "bankCard": "6223162925641819",
+      "bankName": "河源市",
+      "bankUser": "钟晓钰",
+      "bankRemark": "宁波市商业银行",
+      "address": "河源市 河源市 紫金县 灌婴路165号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:33:26"
+  "updatedAt": "2026/5/31 20:34:41"
 }
