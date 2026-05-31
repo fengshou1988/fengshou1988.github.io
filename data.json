@@ -849,10 +849,27 @@
       "bankUser": "孟庆勇",
       "bankRemark": "农村信用社联合社",
       "address": "吉林省 白山市 江源县 柳仓路314号"
+    },
+    {
+      "id": "1780231625359",
+      "date": "2026-05-31",
+      "name": "郑贤科",
+      "nick": "时光的摆渡人",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "13696627395",
+      "area": "河南省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "62231088256629557",
+      "bankName": "河南省",
+      "bankUser": "郑贤科",
+      "bankRemark": "商业银行",
+      "address": "河南省 平顶山市 宝丰县 江大南路47号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:45:02"
+  "updatedAt": "2026/5/31 20:47:05"
 }
