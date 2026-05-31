@@ -1019,10 +1019,27 @@
       "bankUser": "段尚",
       "bankRemark": "攀枝花市商业银行",
       "address": "江苏省 盐城市 滨海县 胜利路226号"
+    },
+    {
+      "id": "1780232553573",
+      "date": "2026-05-31",
+      "name": "许海莹",
+      "nick": "厚德载福",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "16318342313",
+      "area": "河南省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "62231032885190086",
+      "bankName": "西宁市",
+      "bankUser": "许海莹",
+      "bankRemark": "西宁市商业银行",
+      "address": "河南省 濮阳市 濮阳县 沙园路962号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:01:27"
+  "updatedAt": "2026/5/31 21:02:33"
 }
