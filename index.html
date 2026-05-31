@@ -747,173 +747,177 @@
         function closeLogModal(){document.getElementById('logModal').classList.add('hidden');}
     </script>
 
-    <script>
-    const GITHUB_CONFIG = {
-      OWNER: "fengshou1988",
-      REPO: "fengshou1988.github.io",
-      BRANCH: "main",
-      FILE_PATH: "data.json"
+  <script>
+const GITHUB_CONFIG = {
+  OWNER: "fengshou1988",
+  REPO: "fengshou1988.github.io",
+  BRANCH: "main",
+  FILE_PATH: "data.json"
+};
+
+let GITHUB_TOKEN = "";
+let isSyncing = false;
+let currentFileSha = undefined;
+
+function updateSyncStatus(msg) {
+    const el = document.getElementById('syncStatus');
+    if (msg) el.innerHTML = `同步状态：${msg}`;
+    else el.innerHTML = GITHUB_TOKEN ? "同步状态：已设置令牌，等待同步" : "同步状态：未设置令牌";
+}
+
+function saveGitHubToken() {
+    const val = document.getElementById('githubTokenInput').value.trim();
+    if (!val) return alert('请输入令牌');
+    localStorage.setItem('GITHUB_TOKEN_SECURE', val);
+    GITHUB_TOKEN = val;
+    updateSyncStatus("令牌已保存 ✅");
+    alert('✅ 令牌已保存到本地浏览器');
+}
+
+function loadGitHubToken() {
+    GITHUB_TOKEN = localStorage.getItem('GITHUB_TOKEN_SECURE') || "";
+    document.getElementById('githubTokenInput').value = GITHUB_TOKEN;
+}
+
+function clearGitHubToken() {
+    localStorage.removeItem('GITHUB_TOKEN_SECURE');
+    GITHUB_TOKEN = "";
+    document.getElementById('githubTokenInput').value = "";
+    updateSyncStatus("令牌已清除");
+    alert('✅ 令牌已清除');
+}
+
+function getAllLocalData() {
+  return {
+    customer: JSON.parse(localStorage.getItem('customerData') || '[]'),
+    flowRecord: JSON.parse(localStorage.getItem('flowData') || '[]'),
+    positionRecord: JSON.parse(localStorage.getItem('positionData') || '[]'),
+    signUsers: JSON.parse(localStorage.getItem('signUsers') || '{}'),
+    updatedAt: new Date().toLocaleString()
+  };
+}
+
+function saveAllDataToLocal(data) {
+  try {
+    localStorage.setItem('customerData', JSON.stringify(data.customer || []));
+    localStorage.setItem('flowData', JSON.stringify(data.flowRecord || []));
+    localStorage.setItem('positionData', JSON.stringify(data.positionRecord || []));
+    localStorage.setItem('signUsers', JSON.stringify(data.signUsers || {}));
+    customer = JSON.parse(localStorage.getItem('customerData')) || [];
+    flowRecord = JSON.parse(localStorage.getItem('flowData')) || [];
+    positionRecord = JSON.parse(localStorage.getItem('positionData')) || [];
+    signUsers = JSON.parse(localStorage.getItem('signUsers')) || {};
+    countTotalData();
+    renderList();
+    console.log("✅ 云端数据已同步到本地");
+  } catch (e) {}
+}
+
+async function pullFromGitHub() {
+  if (!GITHUB_TOKEN) return;
+  updateSyncStatus("正在从云端拉取...");
+  try {
+    const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}?ref=${GITHUB_CONFIG.BRANCH}`;
+    const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
+    const json = await res.json();
+    if (!json.content) return;
+    const decoded = atob(json.content.replace(/\n/g, ''));
+    const data = JSON.parse(decoded);
+    saveAllDataToLocal(data);
+    currentFileSha = json.sha;
+    updateSyncStatus("拉取云端数据成功 ✅");
+    return true;
+  } catch (e) {
+    updateSyncStatus("云端暂无数据，可直接同步");
+    console.log("ℹ️ 云端暂无数据");
+    return false;
+  }
+}
+
+async function pushToGitHub() {
+  if (!GITHUB_TOKEN || isSyncing) return;
+  isSyncing = true;
+  updateSyncStatus("正在同步到云端...");
+  try {
+    const data = getAllLocalData();
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+    const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`;
+    
+    const body = {
+      message: "自动同步客户数据",
+      content: content,
+      branch: GITHUB_CONFIG.BRANCH
     };
+    
+    if (currentFileSha) body.sha = currentFileSha;
 
-    let GITHUB_TOKEN = "";
-    let isSyncing = false;
-    let currentFileSha = undefined;
+    const res = await fetch(api, {
+      method: "PUT",
+      headers: {
+        "Authorization": `token ${GITHUB_TOKEN}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
 
-    function updateSyncStatus(msg) {
-        const el = document.getElementById('syncStatus');
-        if (msg) el.innerHTML = `同步状态：${msg}`;
-        else el.innerHTML = GITHUB_TOKEN ? "同步状态：已设置令牌，等待同步" : "同步状态：未设置令牌";
+    const result = await res.json();
+    if (result.content) {
+      currentFileSha = result.content.sha;
+      updateSyncStatus("同步成功 ✅");
+      console.log("✅ 数据已同步到 GitHub");
     }
+  } catch (e) {
+    updateSyncStatus("同步失败 ❌");
+    console.error("同步失败", e);
+  }
+  isSyncing = false;
+}
 
-    function saveGitHubToken() {
-        const val = document.getElementById('githubTokenInput').value.trim();
-        if (!val) return alert('请输入令牌');
-        localStorage.setItem('GITHUB_TOKEN_SECURE', val);
-        GITHUB_TOKEN = val;
-        updateSyncStatus("令牌已保存 ✅");
-        alert('✅ 令牌已保存到本地浏览器');
-    }
+async function manualPushToGitHub() {
+    if (!GITHUB_TOKEN) return alert("请先保存令牌");
+    await pushToGitHub();
+    alert("手动同步完成！");
+}
 
-    function loadGitHubToken() {
-        GITHUB_TOKEN = localStorage.getItem('GITHUB_TOKEN_SECURE') || "";
-        document.getElementById('githubTokenInput').value = GITHUB_TOKEN;
-    }
-
-    function clearGitHubToken() {
-        localStorage.removeItem('GITHUB_TOKEN_SECURE');
-        GITHUB_TOKEN = "";
-        document.getElementById('githubTokenInput').value = "";
-        updateSyncStatus("令牌已清除");
-        alert('✅ 令牌已清除');
-    }
-
-    function getAllLocalData() {
-      return {
-        customer: JSON.parse(localStorage.getItem('customerData') || '[]'),
-        flowRecord: JSON.parse(localStorage.getItem('flowData') || '[]'),
-        positionRecord: JSON.parse(localStorage.getItem('positionData') || '[]'),
-        signUsers: JSON.parse(localStorage.getItem('signUsers') || '{}'),
-        updatedAt: new Date().toLocaleString()
-      };
-    }
-
-    function saveAllDataToLocal(data) {
-      try {
-        localStorage.setItem('customerData', JSON.stringify(data.customer || []));
-        localStorage.setItem('flowData', JSON.stringify(data.flowRecord || []));
-        localStorage.setItem('positionData', JSON.stringify(data.positionRecord || []));
-        localStorage.setItem('signUsers', JSON.stringify(data.signUsers || {}));
-        customer = JSON.parse(localStorage.getItem('customerData')) || [];
-        flowRecord = JSON.parse(localStorage.getItem('flowData')) || [];
-        positionRecord = JSON.parse(localStorage.getItem('positionData')) || [];
-        signUsers = JSON.parse(localStorage.getItem('signUsers')) || {};
-        countTotalData();
-        renderList();
-        console.log("✅ 云端数据已同步到本地");
-      } catch (e) {}
-    }
-
-    async function pullFromGitHub() {
-      if (!GITHUB_TOKEN) return;
-      updateSyncStatus("正在从云端拉取...");
-      try {
+// 修复后的测试同步逻辑
+async function testGitHubSync() {
+    if (!GITHUB_TOKEN) return alert("请先保存令牌");
+    updateSyncStatus("测试连接中...");
+    try {
+        // 改用读取文件接口测试，比仓库接口更稳定
         const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}?ref=${GITHUB_CONFIG.BRANCH}`;
         const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
-        const json = await res.json();
-        if (!json.content) return;
-        const decoded = atob(json.content.replace(/\n/g, ''));
-        const data = JSON.parse(decoded);
-        saveAllDataToLocal(data);
-        currentFileSha = json.sha;
-        updateSyncStatus("拉取云端数据成功 ✅");
-        return true;
-      } catch (e) {
-        updateSyncStatus("云端暂无数据，可直接同步");
-        console.log("ℹ️ 云端暂无数据");
-        return false;
-      }
-    }
-
-    async function pushToGitHub() {
-      if (!GITHUB_TOKEN || isSyncing) return;
-      isSyncing = true;
-      updateSyncStatus("正在同步到云端...");
-      try {
-        const data = getAllLocalData();
-        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
-        const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`;
-        
-        const body = {
-          message: "自动同步客户数据",
-          content: content,
-          branch: GITHUB_CONFIG.BRANCH
-        };
-        
-        if (currentFileSha) body.sha = currentFileSha;
-
-        const res = await fetch(api, {
-          method: "PUT",
-          headers: {
-            "Authorization": `token ${GITHUB_TOKEN}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(body)
-        });
-
-        const result = await res.json();
-        if (result.content) {
-          currentFileSha = result.content.sha;
-          updateSyncStatus("同步成功 ✅");
-          console.log("✅ 数据已同步到 GitHub");
+        // 404=文件不存在但令牌有效；200=文件存在且令牌有效；其他状态码=令牌无效
+        if (res.ok || res.status === 404) {
+            updateSyncStatus("连接测试成功 ✅");
+            alert("✅ GitHub 连接测试成功！令牌有效");
+        } else {
+            updateSyncStatus("测试失败：令牌或权限错误");
+            alert("❌ 测试失败：令牌无效或无仓库权限");
         }
-      } catch (e) {
-        updateSyncStatus("同步失败 ❌");
-        console.error("同步失败", e);
-      }
-      isSyncing = false;
+    } catch (e) {
+        updateSyncStatus("测试失败：网络错误");
+        alert("❌ 测试失败：网络异常");
     }
+}
 
-    async function manualPushToGitHub() {
-        if (!GITHUB_TOKEN) return alert("请先保存令牌");
-        await pushToGitHub();
-        alert("手动同步完成！");
+window.addEventListener('load', async () => {
+  await pullFromGitHub();
+  
+  const originalSetItem = localStorage.setItem;
+  localStorage.setItem = function(key, value) {
+    originalSetItem.call(this, key, value);
+    if ([
+      'customerData',
+      'flowData',
+      'positionData',
+      'signUsers'
+    ].includes(key)) {
+      pushToGitHub();
     }
-
-    async function testGitHubSync() {
-        if (!GITHUB_TOKEN) return alert("请先保存令牌");
-        updateSyncStatus("测试连接中...");
-        try {
-            const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}`;
-            const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_TOKEN}` } });
-            if (res.ok) {
-                updateSyncStatus("连接测试成功 ✅");
-                alert("✅ GitHub 连接测试成功！令牌有效");
-            } else {
-                updateSyncStatus("测试失败：令牌或权限错误");
-                alert("❌ 测试失败：令牌无效或无仓库权限");
-            }
-        } catch (e) {
-            updateSyncStatus("测试失败：网络错误");
-            alert("❌ 测试失败：网络异常");
-        }
-    }
-
-    window.addEventListener('load', async () => {
-      await pullFromGitHub();
-      
-      const originalSetItem = localStorage.setItem;
-      localStorage.setItem = function(key, value) {
-        originalSetItem.call(this, key, value);
-        if ([
-          'customerData',
-          'flowData',
-          'positionData',
-          'signUsers'
-        ].includes(key)) {
-          pushToGitHub();
-        }
-      };
-    });
+  };
+});
+</script>
     </script>
 </body>
 </html>
