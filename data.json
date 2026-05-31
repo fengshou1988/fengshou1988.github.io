@@ -1036,10 +1036,27 @@
       "bankUser": "许海莹",
       "bankRemark": "西宁市商业银行",
       "address": "河南省 濮阳市 濮阳县 沙园路962号"
+    },
+    {
+      "id": "1780232611782",
+      "date": "2026-05-31",
+      "name": "雄林",
+      "nick": "观海听风自悠然",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "17419020310",
+      "area": "河北省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "6224919716937873",
+      "bankName": "河北省",
+      "bankUser": "雄林",
+      "bankRemark": "星展银行",
+      "address": "河北省 承德市 兴隆县 盐城路506号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:02:33"
+  "updatedAt": "2026/5/31 21:03:31"
 }
