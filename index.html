@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>客户综合管理系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", system-ui, sans-serif;
+        }
+        body {
+            background: #e6f7ff;
+            min-height: 100vh;
+            color: #222;
+        }
+        .table-wrap {
+            overflow-x: auto;
+        }
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 9999;
+        }
+        .modal-box {
+            background: #fff;
+            padding: 20px; border-radius: 8px;
+            width: 92%; max-width: 900px;
+            max-height: 90vh; overflow-y: auto;
+        }
+        .hidden { display: none !important; }
+        .bg-white {
+            background: rgba(255,255,255,0.95);
+            border: 1px solid #dbeafe;
+        }
+        .copy-tip {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 4px;
+            z-index: 10000;
+            animation: fadeInOut 1.5s ease forwards;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-transparent">
+    <div class="container mx-auto px-3 py-5 max-w-7xl">
+        <h1 class="text-[68px] font-bold text-center mb-10" style="font-family:'华文行楷',sans-serif; color: #111;">🪙 丰收信息系统 🪙</h1>
+
+        <div class="bg-white rounded shadow p-4 mb-4 grid grid-cols-2 md:grid-cols-5 gap-3 text-center">
+            <div>总客户数<br><span id="totalCustomer" class="text-lg font-bold text-blue-600">0</span></div>
+            <div>累计充值总额<br><span id="totalRecharge" class="text-lg font-bold text-blue-600">0.00</span></div>
+            <div>累计提现总额<br><span id="totalWithdraw" class="text-lg font-bold text-blue-600">0.00</span></div>
+            <div class="text-3xl font-bold">客户总余额<br><span id="totalBalance" class="text-3xl font-bold text-red-600">0.00</span></div>
+            <div>接待员统计<br><span id="receptionStats" class="text-lg font-bold text-blue-600">0</span></div>
+        </div>
+
+        <div class="bg-white rounded shadow p-4 mb-4">
+            <div class="flex flex-wrap gap-3 items-center">
+                <input type="text" id="searchKey" placeholder="姓名/昵称/手机号" class="border px-3 py-2 rounded flex-1 min-w-[220px]">
+                <select id="filterChannel" class="border px-3 py-2 rounded">
+                    <option value="">全部渠道</option><option value="抖音">抖音</option><option value="百度">百度</option><option value="视频号">视频号</option><option value="电销">电销</option><option value="截留">截留</option><option value="custom">自定义渠道</option>
+                </select>
+                <input type="text" id="customChannel" placeholder="自定义渠道" class="border px-3 py-2 rounded hidden">
+                <select id="filterStatus" class="border px-3 py-2 rounded">
+                    <option value="">全部状态</option><option value="意向">意向</option><option value="预约">预约</option><option value="开户">开户</option><option value="入金">入金</option><option value="反诈">反诈</option><option value="点醒">点醒</option><option value="custom">自定义状态</option>
+                </select>
+                <input type="text" id="customStatus" placeholder="自定义状态" class="border px-3 py-2 rounded hidden">
+                <select id="filterReception" class="border px-3 py-2 rounded">
+                    <option value="">全部接待员</option>
+                </select>
+                <select id="sortType" class="border px-3 py-2 rounded">
+                    <option value="date">加入时间</option><option value="name">姓名</option><option value="balance">账户余额</option>
+                </select>
+                <select id="sortOrder" class="border px-3 py-2 rounded">
+                    <option value="desc">降序</option><option value="asc">升序</option>
+                </select>
+                <button onclick="renderList()" class="bg-blue-500 text-white px-4 py-2 rounded">搜索查询</button>
+                <button onclick="resetFilter()" class="bg-gray-500 text-white px-4 py-2 rounded">重置</button>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 mb-4">
+            <button onclick="openAddCustomer()" class="bg-green-600 text-white px-4 py-2 rounded">新增客户</button>
+            <button onclick="openCalcModal()" class="bg-orange-500 text-white px-4 py-2 rounded">仓位计算器</button>
+            <button onclick="openProfitModal()" class="bg-teal-600 text-white px-4 py-2 rounded">复利计算器</button>
+            <button onclick="openSignModal()" class="bg-pink-600 text-white px-4 py-2 rounded">签到</button>
+            <button onclick="showTodayCheck()" class="bg-blue-700 text-white px-4 py-2 rounded">今日考勤</button>
+            <button onclick="deleteBatch()" class="bg-red-600 text-white px-4 py-2 rounded">批量删除</button>
+            <button onclick="downloadExcelTemplate()" class="bg-amber-500 text-white px-4 py-2 rounded">下载模板</button>
+            <button onclick="document.getElementById('importExcel').click()" class="bg-indigo-500 text-white px-4 py-2 rounded">批量导入</button>
+            <button onclick="exportCustomerExcel()" class="bg-purple-600 text-white px-4 py-2 rounded">导出数据</button>
+            <button onclick="showLogRecord()" class="bg-gray-600 text-white px-4 py-2 rounded">操作日志</button>
+            <input type="file" id="importExcel" accept=".xlsx" class="hidden">
+        </div>
+
+        <div class="bg-white rounded shadow table-wrap">
+            <table class="w-full border-collapse text-sm">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border p-2"><input type="checkbox" id="checkAll" onclick="toggleAll()"> 全选</th>
+                        <th class="border p-2">加入日期</th>
+                        <th class="border p-2">姓名</th>
+                        <th class="border p-2">昵称</th>
+                        <th class="border p-2">渠道</th>
+                        <th class="border p-2">接待员</th>
+                        <th class="border p-2">手机号</th>
+                        <th class="border p-2">地区</th>
+                        <th class="border p-2">群号</th>
+                        <th class="border p-2">状态</th>
+                        <th class="border p-2">余额</th>
+                        <th class="border p-2">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="customerTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="customerModal" class="modal hidden"><div class="modal-box"><h3 class="text-lg font-bold mb-4">客户信息 & 银行卡 & 收货地址</h3>
+    <input type="hidden" id="customerId">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div><label class="text-sm">加入日期</label><input type="date" id="cJoinDate" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">姓名</label><input type="text" id="cName" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">昵称</label><input type="text" id="cNick" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">渠道</label><input type="text" id="cChannel" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm text-green-600 font-bold">接待员</label>
+        <select id="cReception" class="w-full border p-2 rounded">
+            <option value="">请选择接待员</option>
+        </select></div>
+        <div><label class="text-sm">电话</label><input type="text" id="cPhone" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">地区</label><input type="text" id="cArea" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">群号</label><input type="text" id="cGroup" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">状态</label><input type="text" id="cStatus" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm text-blue-600">银行卡号</label><input type="text" id="cBankCard" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm text-blue-600">开户行地址</label><input type="text" id="cBankName" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm text-blue-600">持卡人</label><input type="text" id="cBankUser" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm text-blue-600">归属银行</label><input type="text" id="cBankRemark" class="w-full border p-2 rounded"></div>
+        <div class="col-span-2"><label class="text-sm text-red-600 font-bold">收货地址</label><input type="text" id="cAddress" class="w-full border p-2 rounded"></div>
+    </div>
+    <div class="mt-5 flex justify-end gap-3">
+        <button onclick="closeCustomerModal()" class="px-4 py-2 bg-gray-300 rounded">取消</button>
+        <button onclick="saveCustomerData()" class="px-4 py-2 bg-green-600 text-white rounded">保存</button>
+    </div></div></div>
+
+    <div id="flowModal" class="modal hidden"><div class="modal-box"><h3 class="text-lg font-bold mb-4">资金流水</h3>
+    <input type="hidden" id="flowCid">
+    <div class="space-y-3 mb-4">
+        <div class="grid grid-cols-2 gap-3">
+            <select id="flowType" class="border p-2 rounded"><option value="recharge">充值存入</option><option value="withdraw">提现取出</option></select>
+            <input type="number" step="0.01" id="flowMoney" placeholder="金额" class="border p-2 rounded">
+            <input type="text" id="flowRemark" placeholder="备注" class="border p-2 rounded col-span-2">
+        </div>
+        <button onclick="addCustomerFlow()" class="bg-blue-500 text-white p-2 rounded w-full">提交</button>
+    </div>
+    <div class="max-h-[300px] overflow-y-auto">
+        <table class="w-full border-collapse text-sm"><thead><tr class="bg-gray-100">
+            <th class="border p-1">时间</th><th class="border p-1">类型</th><th class="border p-1">金额</th><th class="border p-1">备注</th><th class="border p-1">操作</th>
+        </tr></thead><tbody id="flowTable"></tbody></table>
+    </div>
+    <div class="mt-3 font-bold">余额：<span id="nowBalance" class="text-red-600">0.00</span></div>
+    <div class="mt-4 text-right"><button onclick="closeFlowModal()" class="px-4 py-2 bg-gray-300 rounded">关闭</button></div></div></div>
+
+    <div id="calcModal" class="modal hidden"><div class="modal-box"><h3 class="text-lg font-bold mb-4 text-center">仓位收益计算器</h3>
+    <div class="space-y-3">
+        <div><label class="text-sm">原始价</label><input id="calc_price" type="number" step="0.0001" placeholder="输入原始价" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">折扣（0.8=8折）</label><input id="calc_discount" type="number" step="0.0001" placeholder="输入折扣" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">仓位资金</label><input id="calc_money" type="number" step="0.0001" placeholder="输入资金金额" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">仓位百分比（%）</label><input id="calc_pos" type="number" step="0.01" placeholder="输入仓位比例" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">收益百分比（%）</label><input id="calc_profit" type="number" step="0.01" placeholder="输入收益比例" class="w-full border p-2 rounded"></div>
+        <div class="flex gap-3">
+            <button onclick="doCalc()" class="flex-1 bg-blue-500 text-white p-2 rounded">计算</button>
+            <button onclick="resetCalc()" class="flex-1 bg-gray-400 text-white p-2 rounded">清空</button>
+            <button onclick="savePositionRecord()" class="flex-1 bg-yellow-500 text-white p-2 rounded">保存记录</button>
+        </div>
+        <div class="p-3 bg-gray-100 rounded mt-3 space-y-1 text-sm">
+            <p>✅ 折后价：<span id="res1" class="font-bold text-green-600">0.00</span></p>
+            <p>✅ 未全仓中签收益：<span id="res2" class="font-bold text-green-600">0.00</span></p>
+            <p>✅ 未全仓中签最终收益：<span id="res3" class="font-bold text-red-600">0.00</span></p>
+            <p>✅ 全仓中签收益：<span id="res4" class="font-bold text-green-600">0.00</span></p>
+            <p>✅ 全仓中签最终收益：<span id="res5" class="font-bold text-red-600">0.00</span></p>
+            <p>✅ 可申购股数：<span id="res6" class="font-bold text-blue-600">0</span></p>
+            <p>✅ 可申购股数（推荐）：<span id="res7" class="font-bold text-blue-600">0</span></p>
+        </div>
+    </div>
+    <div class="mt-4 text-right"><button onclick="closeCalcModal()" class="px-4 py-2 bg-gray-300 rounded">关闭</button></div></div></div>
+
+    <div id="positionModal" class="modal hidden">
+        <div class="modal-box">
+            <h3 class="text-lg font-bold mb-4 text-center">客户仓位计算详细记录</h3>
+            <h4 id="positionTitle" class="text-center text-blue-600 mb-3"></h4>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-xs">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="border p-1">计算时间</th>
+                            <th class="border p-1">原始价</th>
+                            <th class="border p-1">折扣</th>
+                            <th class="border p-1">仓位资金</th>
+                            <th class="border p-1">仓位%</th>
+                            <th class="border p-1">收益%</th>
+                            <th class="border p-1">折后价</th>
+                            <th class="border p-1">未全仓收益</th>
+                            <th class="border p-1">未全仓最终</th>
+                            <th class="border p-1">全仓收益</th>
+                            <th class="border p-1">全仓最终</th>
+                            <th class="border p-1">股数</th>
+                            <th class="border p-1">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positionTable"></tbody>
+                </table>
+            </div>
+            <div class="mt-4 text-right">
+                <button onclick="closePositionModal()" class="px-4 py-2 bg-gray-300 rounded">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="profitModal" class="modal hidden">
+        <div class="modal-box"><h3 class="text-lg font-bold mb-4 text-center">复利计算器</h3>
+        <div class="space-y-3">
+            <div><label class="text-sm">初始本金</label><input type="number" id="profitMoney" value="1000" class="w-full border p-2 rounded"></div>
+            <div><label class="text-sm">计算天数</label><input type="number" id="profitDays" min="1" max="30" value="10" oninput="createRateInputs()" class="w-full border p-2 rounded"></div>
+            <div><label class="text-sm">每日收益率(%)</label><div id="rateInputBox" class="flex flex-wrap gap-2 mt-2"></div></div>
+            <div class="flex gap-3">
+                <button onclick="calcProfit()" class="flex-1 bg-blue-500 text-white p-2 rounded">计算</button>
+                <button onclick="resetProfit()" class="flex-1 bg-gray-400 text-white p-2 rounded">重置</button>
+            </div>
+            <div class="p-3 bg-gray-100 rounded mt-3 max-h-64 overflow-y-auto text-sm" id="profitResult"></div>
+        </div>
+        <div class="mt-4 text-right"><button onclick="closeProfitModal()" class="px-4 py-2 bg-gray-300 rounded">关闭</button></div></div>
+    </div>
+
+    <div id="signModal" class="modal hidden">
+        <div class="modal-box">
+            <h3 class="text-xl font-bold text-center mb-4">🪙 客户每日三时段签到</h3>
+            <div class="mb-3">
+                <input id="signKey" placeholder="输入客户 姓名/手机号 签到" class="w-full border p-3 rounded text-lg">
+            </div>
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <button onclick="sign('早')" class="bg-green-500 text-white p-2 rounded font-bold">☀️ 早签到</button>
+                <button onclick="sign('中')" class="bg-blue-500 text-white p-2 rounded font-bold">☀️ 午签到</button>
+                <button onclick="sign('晚')" class="bg-purple-500 text-white p-2 rounded font-bold">🌙 晚签到</button>
+            </div>
+            <div id="signMsg" class="text-center font-bold text-red-500 min-h-[40px]"></div>
+            <div class="mt-4 p-3 bg-gray-100 rounded text-sm font-bold">
+                🏆 奖励规则：连续签到7天=精美礼品 | 15天=纪念金钞 | 30天=纪念金条
+            </div>
+            <div class="mt-4 text-lg text-center" id="signInfo"></div>
+            <div class="mt-4 text-right">
+                <button onclick="closeSignModal()" class="px-4 py-2 bg-gray-300 rounded">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="todayCheckModal" class="modal hidden"><div class="modal-box"><h3 class="text-xl font-bold text-center mb-4">今日考勤</h3>
+    <table class="w-full border-collapse text-sm"><thead><tr class="bg-gray-100"><th class="border p-2">姓名</th><th class="border p-2">早</th><th class="border p-2">午</th><th class="border p-2">晚</th><th class="border p-2">状态</th></tr></thead><tbody id="todayCheckList"></tbody></table>
+    <div class="mt-4 text-right"><button onclick="closeTodayCheck()" class="px-4 py-2 bg-gray-300 rounded">关闭</button></div></div></div>
+    <div id="userCheckModal" class="modal hidden"><div class="modal-box"><h3 class="text-xl font-bold text-center mb-4">个人考勤</h3>
+    <h4 id="userCheckName" class="text-center"></h4><table class="w-full border-collapse text-sm"><thead><tr class="bg-gray-100"><th class="border p-2">日期</th><th class="border p-2">早</th><th class="border p-2">午</th><th class="border p-2">晚</th><th class="border p-2">完成</th></tr></thead><tbody id="userCheckList"></tbody></table>
+    <div class="mt-4 text-right"><button onclick="closeUserCheck()" class="px-4 py-2 bg-gray-300 rounded">关闭</button></div></div></div>
+
+    <div id="logModal" class="modal hidden"><div class="modal-box"><h3 class="text-lg font-bold mb-4">操作日志</h3>
+    <div id="logBox" class="max-h-[400px] overflow-y-auto text-sm"></div>
+    <div class="mt-4 text-right"><button onclick="closeLogModal()" class="px-4 py-2 bg-gray-300 rounded">关闭</button></div></div></div>
+
+    <script>
+        const RECEPTION_LIST = ["丰收", "路虎", "KK", "库里南", "狂风", "毅晨"];
+        let customer = JSON.parse(localStorage.getItem('customerData')) || [];
+        let flowRecord = JSON.parse(localStorage.getItem('flowData')) || [];
+        let positionRecord = JSON.parse(localStorage.getItem('positionData')) || [];
+        let operateLog = JSON.parse(localStorage.getItem('logData')) || [];
+        let signUsers = JSON.parse(localStorage.getItem('signUsers')) || {};
+        let today = new Date().toLocaleDateString();
+
+        window.onload = function () {
+            initReceptionSelect();
+            countTotalData();
+            renderList();
+            document.getElementById('filterChannel').addEventListener('change', function () {
+                document.getElementById('customChannel').classList.toggle('hidden', this.value != 'custom');
+            });
+            document.getElementById('filterStatus').addEventListener('change', function () {
+                document.getElementById('customStatus').classList.toggle('hidden', this.value != 'custom');
+            });
+            document.getElementById('importExcel').onchange = importExcelData;
+        }
+
+        function initReceptionSelect() {
+            let filter = document.getElementById('filterReception');
+            let modalSel = document.getElementById('cReception');
+            filter.innerHTML = '<option value="">全部接待员</option>';
+            modalSel.innerHTML = '<option value="">请选择接待员</option>';
+            RECEPTION_LIST.forEach(name => {
+                filter.innerHTML += `<option value="${name}">${name}</option>`;
+                modalSel.innerHTML += `<option value="${name}">${name}</option>`;
+            });
+        }
+
+        function copyText(text, tip) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text; document.body.appendChild(textarea);
+            textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea);
+            showTip(tip || '复制成功');
+        }
+        function showTip(text) {
+            const tip = document.createElement('div'); tip.className = 'copy-tip'; tip.innerText = text;
+            document.body.appendChild(tip); setTimeout(() => document.body.removeChild(tip), 1500);
+        }
+        function copyAllInfo(id) {
+            const item = customer.find(s => s.id === id); if (!item) return;
+            let info = `姓名：${item.name||''}\n手机号：${item.phone||''}\n接待员：${item.reception||''}\n地址：${item.address||''}\n余额：${getCustomerBalance(id)}`;
+            copyText(info, '客户信息复制成功');
+        }
+
+        function toggleAll() {
+            let checked = document.getElementById('checkAll').checked;
+            document.querySelectorAll('.item-check').forEach(cb => cb.checked = checked);
+        }
+        function deleteBatch() {
+            let checks = document.querySelectorAll('.item-check:checked');
+            if (!checks.length) return alert("请选择客户！");
+            if (!confirm("确定删除？")) return;
+            let ids = []; checks.forEach(cb => ids.push(cb.value));
+            customer = customer.filter(i => !ids.includes(i.id));
+            flowRecord = flowRecord.filter(i => !ids.includes(i.cid));
+            positionRecord = positionRecord.filter(i => !ids.includes(i.cid));
+            saveData(); renderList(); countTotalData(); alert("删除成功");
+        }
+
+        function renderList() {
+            let key = document.getElementById('searchKey').value.trim().toLowerCase();
+            let channel = document.getElementById('filterChannel').value;
+            let customChannel = document.getElementById('customChannel').value.trim();
+            let status = document.getElementById('filterStatus').value;
+            let customStatus = document.getElementById('customStatus').value.trim();
+            let reception = document.getElementById('filterReception').value;
+            let sortType = document.getElementById('sortType').value;
+            let sortOrder = document.getElementById('sortOrder').value;
+            
+            let list = [...customer];
+            if (key) list = list.filter(item => (item.name||'').toLowerCase().includes(key) || (item.phone||'').includes(key));
+            if (channel) {
+                if (channel === "custom" && customChannel) list = list.filter(item => (item.channel||"").includes(customChannel));
+                else if (channel !== "custom") list = list.filter(item => item.channel === channel);
+            }
+            if (status) {
+                if (status === "custom" && customStatus) list = list.filter(item => (item.status||"").includes(customStatus));
+                else if (status !== "custom") list = list.filter(item => item.status === status);
+            }
+            if (reception) list = list.filter(item => item.reception === reception);
+
+            list.sort((a, b) => {
+                let va = a[sortType] || "", vb = b[sortType] || "";
+                if (sortType === "balance") { va = parseFloat(getCustomerBalance(a.id)) || 0; vb = parseFloat(getCustomerBalance(b.id)) || 0; }
+                return sortOrder === "asc" ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+            });
+
+            let html = '';
+            list.forEach(item => {
+                html += `<tr>
+                    <td class="border p-2"><input class="item-check" type="checkbox" value="${item.id}"></td>
+                    <td class="border p-2">${item.date || ''}</td>
+                    <td class="border p-2">${item.name || ''}</td>
+                    <td class="border p-2">${item.nick || ''}</td>
+                    <td class="border p-2">${item.channel || ''}</td>
+                    <td class="border p-2 font-bold text-green-600">${item.reception || '-'}</td>
+                    <td class="border p-2">${item.phone || ''}</td>
+                    <td class="border p-2">${item.area || ''}</td>
+                    <td class="border p-2">${item.group || ''}</td>
+                    <td class="border p-2">${item.status || ''}</td>
+                    <td class="border p-2 font-bold text-red-600">${getCustomerBalance(item.id)}</td>
+                    <td class="border p-2">
+                        <button onclick="openUserCheck('${item.phone}','${item.name}')" class="bg-blue-600 text-white px-1 py-1 text-xs rounded">考勤</button>
+                        <button onclick="openEditCustomer('${item.id}')" class="bg-blue-500 text-white px-1 py-1 text-xs rounded">编辑</button>
+                        <button onclick="openFlowRecord('${item.id}')" class="bg-green-500 text-white px-1 py-1 text-xs rounded">流水</button>
+                        <button onclick="openPositionRecord('${item.id}','${item.name}')" class="bg-yellow-500 text-white px-1 py-1 text-xs rounded">计算记录</button>
+                        <button onclick="delCustomer('${item.id}')" class="bg-red-500 text-white px-1 py-1 text-xs rounded">删除</button>
+                        <button onclick="copyAllInfo('${item.id}')" class="bg-cyan-500 text-white px-1 py-1 text-xs rounded">复制信息</button>
+                    </td>
+                </tr>`;
+            });
+            document.getElementById('customerTable').innerHTML = list.length ? html : '<tr><td colspan="12" class="text-center p-4">暂无数据</td></tr>';
+        }
+
+        function openPositionRecord(cid, name) {
+            document.getElementById('positionTitle').innerText = `客户：${name}（所有仓位计算记录）`;
+            let list = positionRecord.filter(item => item.cid === cid).sort((a,b) => new Date(b.time) - new Date(a.time));
+            let html = '';
+            list.forEach(item => {
+                html += `<tr class="text-center">
+                    <td class="border p-1">${item.time}</td>
+                    <td class="border p-1">${item.price}</td>
+                    <td class="border p-1">${item.discount}</td>
+                    <td class="border p-1">${item.money}</td>
+                    <td class="border p-1">${item.pos}%</td>
+                    <td class="border p-1">${item.profit}%</td>
+                    <td class="border p-1 text-green-600">${item.res1}</td>
+                    <td class="border p-1">${item.res2}</td>
+                    <td class="border p-1 text-red-600">${item.res3}</td>
+                    <td class="border p-1">${item.res4}</td>
+                    <td class="border p-1 text-red-600">${item.res5}</td>
+                    <td class="border p-1 text-blue-600">${item.res6}</td>
+                    <td class="border p-1"><button onclick="delPositionRecord('${item.id}')" class="bg-red-500 text-white px-1 py-0 text-xs rounded">删</button></td>
+                </tr>`;
+            });
+            document.getElementById('positionTable').innerHTML = html || '<tr><td colspan="13" class="text-center p-3">暂无仓位记录</td></tr>';
+            document.getElementById('positionModal').classList.remove('hidden');
+        }
+        function closePositionModal() { document.getElementById('positionModal').classList.add('hidden'); }
+        function savePositionRecord() {
+            let keyword = prompt("请输入客户姓名/手机号，绑定仓位记录：");
+            if (!keyword) return;
+            let target = customer.find(i => i.name === keyword || i.phone === keyword);
+            if (!target) return alert("未找到该客户！");
+            let data = {
+                id: Date.now().toString(),
+                cid: target.id,
+                time: new Date().toLocaleString(),
+                price: document.getElementById('calc_price').value || 0,
+                discount: document.getElementById('calc_discount').value || 0,
+                money: document.getElementById('calc_money').value || 0,
+                pos: document.getElementById('calc_pos').value || 0,
+                profit: document.getElementById('calc_profit').value || 0,
+                res1: document.getElementById('res1').innerText,
+                res2: document.getElementById('res2').innerText,
+                res3: document.getElementById('res3').innerText,
+                res4: document.getElementById('res4').innerText,
+                res5: document.getElementById('res5').innerText,
+                res6: document.getElementById('res6').innerText
+            };
+            positionRecord.push(data);
+            saveData();
+            alert("✅ 仓位详细记录保存成功！");
+        }
+        function delPositionRecord(id) {
+            if (!confirm("确定删除该记录？")) return;
+            positionRecord = positionRecord.filter(item => item.id !== id);
+            saveData();
+            openPositionRecord(document.getElementById('positionTitle').innerText.split('：')[1], '');
+        }
+
+        function openCalcModal(){document.getElementById('calcModal').classList.remove('hidden');}
+        function closeCalcModal(){document.getElementById('calcModal').classList.add('hidden');}
+        function doCalc() {
+            let price = +document.getElementById('calc_price').value || 0;
+            let discount = +document.getElementById('calc_discount').value || 1;
+            let money = +document.getElementById('calc_money').value || 0;
+            let posRate = +document.getElementById('calc_pos').value || 0;
+            let profitRate = +document.getElementById('calc_profit').value || 0;
+            let res1 = price * discount;
+            let res2 = money * (posRate/100) * (profitRate/100);
+            let res3 = res2 + money;
+            let res4 = money * (profitRate/100);
+            let res5 = res4 + money;
+            let res6 = res1 > 0 ? Math.floor(money / res1) : 0;
+            let res7 = res1 > 0 ? Math.floor(money / res1 / 100) * 100 : 0;
+            document.getElementById('res1').innerText = res1.toFixed(2);
+            document.getElementById('res2').innerText = res2.toFixed(2);
+            document.getElementById('res3').innerText = res3.toFixed(2);
+            document.getElementById('res4').innerText = res4.toFixed(2);
+            document.getElementById('res5').innerText = res5.toFixed(2);
+            document.getElementById('res6').innerText = res6;
+            document.getElementById('res7').innerText = res7;
+        }
+        function resetCalc() {
+            document.querySelectorAll('#calcModal input').forEach(i => i.value = '');
+            document.querySelectorAll('#calcModal span').forEach(s => s.innerText = '0.00');
+            document.getElementById('res6').innerText = '0';
+            document.getElementById('res7').innerText = '0';
+        }
+
+        function findUser() {
+            let key = document.getElementById('signKey').value.trim().toLowerCase();
+            if (!key) return null;
+            return customer.find(item => 
+                (item.name && item.name.trim().toLowerCase() === key) || 
+                (item.phone && item.phone.trim() === key)
+            );
+        }
+        function sign(type) {
+            let user = findUser();
+            if (!user) {
+                document.getElementById('signMsg').innerText = "❌ 未找到该客户，请先添加客户！";
+                return;
+            }
+            let phone = user.phone;
+            if (!signUsers[phone]) { signUsers[phone] = { records: {}, continuous: 0, lastDate: "" }; }
+            let userSign = signUsers[phone];
+            if (!userSign.records[today]) { userSign.records[today] = []; }
+            if (userSign.records[today].includes(type)) {
+                document.getElementById('signMsg').innerText = `✅ ${user.name} 今日${type}签到已完成！`;
+                return;
+            }
+            userSign.records[today].push(type);
+            if (userSign.lastDate !== today) { userSign.continuous++; userSign.lastDate = today; }
+            localStorage.setItem('signUsers', JSON.stringify(signUsers));
+            loadSignInfo();
+            document.getElementById('signMsg').innerText = `🎉 ${user.name} ${type}签到成功！`;
+        }
+        function loadSignInfo() {
+            let user = findUser();
+            if (!user) { document.getElementById('signInfo').innerText = ""; return; }
+            let userSign = signUsers[user.phone] || { records: {}, continuous: 0 };
+            let todaySign = userSign.records[today] || [];
+            document.getElementById('signInfo').innerText = `客户：${user.name} | 连续签到：${userSign.continuous} 天 | 今日已签：${todaySign.length}/3 次`;
+        }
+        function openSignModal(){
+            document.getElementById('signKey').value = '';
+            document.getElementById('signMsg').innerText = '';
+            document.getElementById('signInfo').innerText = '';
+            document.getElementById('signModal').classList.remove('hidden');
+        }
+        function closeSignModal(){document.getElementById('signModal').classList.add('hidden');}
+
+        function showTodayCheck(){
+            let html = '';
+            customer.forEach(user => {
+                let todaySign = (signUsers[user.phone]?.records[today]) || [];
+                html += `<tr class="text-center">
+                    <td class="border p-2">${user.name}</td>
+                    <td class="border p-2 ${todaySign.includes('早')?'text-green-600':'text-red-500'}">${todaySign.includes('早')?'✔':'✘'}</td>
+                    <td class="border p-2 ${todaySign.includes('中')?'text-green-600':'text-red-500'}">${todaySign.includes('中')?'✔':'✘'}</td>
+                    <td class="border p-2 ${todaySign.includes('晚')?'text-green-600':'text-red-500'}">${todaySign.includes('晚')?'✔':'✘'}</td>
+                    <td class="border p-2">${todaySign.length}/3</td>
+                </tr>`;
+            });
+            document.getElementById('todayCheckList').innerHTML = html;
+            document.getElementById('todayCheckModal').classList.remove('hidden');
+        }
+        function openUserCheck(phone,name){
+            let rec = signUsers[phone] || {records:{}};
+            let arr = [];
+            for(let d in rec.records){
+                let t = rec.records[d]||[];
+                arr.push({date:d, m:t.includes('早'),a:t.includes('中'),e:t.includes('晚'), cnt:t.length});
+            }
+            arr.sort((a,b)=>new Date(b.date)-new Date(a.date));
+            let html = '';
+            arr.forEach(i=>{
+                html+=`<tr class="text-center">
+                    <td class="border p-2">${i.date}</td>
+                    <td class="border p-2 ${i.m?'text-green-600':'text-red-500'}">${i.m?'✔':'✘'}</td>
+                    <td class="border p-2 ${i.a?'text-green-600':'text-red-500'}">${i.a?'✔':'✘'}</td>
+                    <td class="border p-2 ${i.e?'text-green-600':'text-red-500'}">${i.e?'✔':'✘'}</td>
+                    <td class="border p-2">${i.cnt}/3</td>
+                </tr>`;
+            });
+            document.getElementById('userCheckName').innerText = name;
+            document.getElementById('userCheckList').innerHTML = html;
+            document.getElementById('userCheckModal').classList.remove('hidden');
+        }
+        function closeTodayCheck(){document.getElementById('todayCheckModal').classList.add('hidden');}
+        function closeUserCheck(){document.getElementById('userCheckModal').classList.add('hidden');}
+
+        function getCustomerBalance(id){let b=0;flowRecord.forEach(f=>{if(f.cid===id)b+=f.type==='recharge'?+f.money:-f.money});return b.toFixed(2);}
+        function countTotalData(){
+            let tr=0,tw=0,tb=0;
+            flowRecord.forEach(f=>{f.type==='recharge'?tr+=+f.money:tw+=+f.money});
+            customer.forEach(c=>tb+=+getCustomerBalance(c.id));
+            document.getElementById('totalCustomer').textContent=customer.length;
+            document.getElementById('totalRecharge').textContent=tr.toFixed(2);
+            document.getElementById('totalWithdraw').textContent=tw.toFixed(2);
+            document.getElementById('totalBalance').textContent=tb.toFixed(2);
+            updateReceptionStats();
+        }
+        function updateReceptionStats() {
+            let map = {};
+            customer.forEach(item => {
+                let name = item.reception || "未分配";
+                map[name] = (map[name] || 0) + 1;
+            });
+            let str = "";
+            for (let k in map) str += `${k}:${map[k]}人 `;
+            document.getElementById('receptionStats').innerText = str || "0";
+        }
+        function resetFilter(){
+            document.getElementById('searchKey').value='';
+            document.getElementById('filterChannel').value='';
+            document.getElementById('filterStatus').value='';
+            document.getElementById('filterReception').value='';
+            document.getElementById('customChannel').value='';
+            document.getElementById('customStatus').value='';
+            renderList();
+        }
+        function saveData(){
+            localStorage.setItem('customerData',JSON.stringify(customer));
+            localStorage.setItem('flowData',JSON.stringify(flowRecord));
+            localStorage.setItem('positionData',JSON.stringify(positionRecord));
+            localStorage.setItem('signUsers',JSON.stringify(signUsers));
+        }
+
+        function openAddCustomer(){
+            document.getElementById('customerId').value='';
+            document.querySelectorAll('#customerModal input').forEach(i=>i.value='');
+            document.getElementById('cReception').value = '';
+            document.getElementById('customerModal').classList.remove('hidden');
+        }
+        function openEditCustomer(id){
+            let item=customer.find(s=>s.id==id);
+            document.getElementById('customerId').value=id;
+            Object.keys(item).forEach(k=>{
+                let dom = document.getElementById(`c${k.charAt(0).toUpperCase()+k.slice(1)}`);
+                if(dom) dom.value = item[k];
+            });
+            document.getElementById('cReception').value = item.reception || '';
+            document.getElementById('customerModal').classList.remove('hidden');
+        }
+        function closeCustomerModal(){document.getElementById('customerModal').classList.add('hidden');}
+        function saveCustomerData(){
+            let id=document.getElementById('customerId').value;
+            let phone=document.getElementById('cPhone').value.trim();
+            if(phone && customer.some(s=>s.phone===phone && s.id!==id)) return alert('手机号已存在！');
+            let data={
+                id:id||Date.now().toString(),
+                date:document.getElementById('cJoinDate').value,
+                name:document.getElementById('cName').value,
+                nick:document.getElementById('cNick').value,
+                channel:document.getElementById('cChannel').value,
+                reception:document.getElementById('cReception').value,
+                phone:phone,
+                area:document.getElementById('cArea').value,
+                group:document.getElementById('cGroup').value,
+                status:document.getElementById('cStatus').value,
+                bankCard:document.getElementById('cBankCard').value,
+                bankName:document.getElementById('cBankName').value,
+                bankUser:document.getElementById('cBankUser').value,
+                bankRemark:document.getElementById('cBankRemark').value,
+                address:document.getElementById('cAddress').value
+            };
+            id?customer.splice(customer.findIndex(s=>s.id==id),1,data):customer.push(data);
+            saveData();closeCustomerModal();countTotalData();renderList();alert('保存成功！');
+        }
+        function delCustomer(id){if(!confirm('确定删除？'))return;customer=customer.filter(s=>s.id!=id);flowRecord=flowRecord.filter(s=>s.cid!=id);positionRecord=positionRecord.filter(s=>s.cid!=id);saveData();countTotalData();renderList();}
+
+        function openFlowRecord(cid){document.getElementById('flowCid').value=cid;document.getElementById('flowModal').classList.remove('hidden');loadFlowList();}
+        function closeFlowModal(){document.getElementById('flowModal').classList.add('hidden');}
+        function addCustomerFlow(){let cid=document.getElementById('flowCid').value;let type=document.getElementById('flowType').value;let money=document.getElementById('flowMoney').value;if(!money||money<=0)return alert('金额错误');flowRecord.push({id:Date.now().toString(),cid:cid,type:type,money:money,remark:document.getElementById('flowRemark').value,time:new Date().toLocaleString()});saveData();loadFlowList();countTotalData();renderList();}
+        function loadFlowList(){let cid=document.getElementById('flowCid').value;let list=flowRecord.filter(s=>s.cid===cid);let html='';list.forEach(item=>{let cls=item.type==='recharge'?'text-green-600':'text-red-600';html+=`<tr><td class="border p-1">${item.time}</td><td class="border p-1 ${cls}">${item.type==='recharge'?'充值':'提现'}</td><td class="border p-1 ${cls}">${item.type==='recharge'?'+':'-'}${item.money}</td><td class="border p-1">${item.remark||'-'}</td><td class="border p-1"><button onclick="delFlow('${item.id}')" class="bg-red-500 text-white px-2 py-1 text-xs rounded">删除</button></td></tr>`;});document.getElementById('flowTable').innerHTML=html;document.getElementById('nowBalance').innerText=getCustomerBalance(cid);}
+        function delFlow(id){if(!confirm('删除？'))return;flowRecord=flowRecord.filter(s=>s.id!==id);saveData();loadFlowList();countTotalData();renderList();}
+
+        function createRateInputs(){let days=Math.max(1,Math.min(30,parseInt(document.getElementById('profitDays').value)||1));let html='';for(let i=1;i<=days;i++)html+=`<input type="number" class="dayRate w-16 border p-1 rounded" value="10">`;document.getElementById('rateInputBox').innerHTML=html;}
+        function calcProfit(){let init=+document.getElementById('profitMoney').value;if(!init||init<=0)return alert('本金错误');let current=init,res='';document.querySelectorAll('.dayRate').forEach((r,i)=>{let rate=+r.value||0;current+=current*rate/100;res+=`<p>第${i+1}天(${rate}%)：${current.toFixed(2)}</p>`;});res+=`<p class="font-bold text-red-600">最终：${current.toFixed(2)}</p>`;document.getElementById('profitResult').innerHTML=res;}
+        function resetProfit(){document.getElementById('profitMoney').value=1000;document.getElementById('profitDays').value=10;document.getElementById('profitResult').innerHTML='';createRateInputs();}
+        function openProfitModal(){document.getElementById('profitModal').classList.remove('hidden');createRateInputs();}
+        function closeProfitModal(){document.getElementById('profitModal').classList.add('hidden');}
+
+        const UNIFIED_HEADERS = ['加入日期','姓名','昵称','渠道','接待员','手机号','地区','群号','状态','银行卡号','开户行地址','持卡人','归属银行','收货地址'];
+        function downloadExcelTemplate(){
+            let arr = [UNIFIED_HEADERS];
+            let wb = XLSX.utils.book_new();
+            let ws = XLSX.utils.aoa_to_sheet(arr);
+            XLSX.utils.book_append_sheet(wb, ws, "客户导入模板");
+            XLSX.writeFile(wb, '客户导入模板.xlsx');
+        }
+        function exportCustomerExcel(){
+            let arr = [UNIFIED_HEADERS];
+            customer.forEach(c => {
+                arr.push([c.date||'',c.name||'',c.nick||'',c.channel||'',c.reception||'',c.phone||'',c.area||'',c.group||'',c.status||'',c.bankCard||'',c.bankName||'',c.bankUser||'',c.bankRemark||'',c.address||'']);
+            });
+            let wb = XLSX.utils.book_new();
+            let ws = XLSX.utils.aoa_to_sheet(arr);
+            XLSX.utils.book_append_sheet(wb, ws, "客户数据");
+            XLSX.writeFile(wb, '客户数据.xlsx');
+        }
+        function importExcelData(e){
+            let file = e.target.files[0];
+            if(!file) { document.getElementById('importExcel').value = ''; return; }
+            let reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const data = new Uint8Array(ev.target.result);
+                    const wb = XLSX.read(data, { type: 'array', cellDates: true });
+                    const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], { header: 1 });
+                    if(!rows || rows.length <= 1){ alert('无数据'); document.getElementById('importExcel').value = ''; return; }
+                    let success = 0, repeat = 0, fail = 0;
+                    const existPhones = new Set(customer.map(item => item.phone).filter(Boolean));
+                    for(let i=1; i<rows.length; i++){
+                        const row = rows[i] || [];
+                        if(row.join('').trim() === '') continue;
+                        const date=row[0]||'',name=(row[1]||'').trim(),nick=row[2]||'',channel=row[3]||'',reception=row[4]||'',phone=(row[5]||'').trim(),area=row[6]||'',group=row[7]||'',status=row[8]||'',bankCard=row[9]||'',bankName=row[10]||'',bankUser=row[11]||'',bankRemark=row[12]||'',address=row[13]||'';
+                        if(!name){ fail++; continue; }
+                        if(phone && existPhones.has(phone)){ repeat++; continue; }
+                        customer.push({id:Date.now().toString()+Math.random().toString(36).substr(2,6),date,name,nick,channel,reception,phone,area,group,status,bankCard,bankName,bankUser,bankRemark,address});
+                        if(phone) existPhones.add(phone); success++;
+                    }
+                    saveData(); countTotalData(); renderList(); alert(`✅ 导入完成！成功：${success} 重复：${repeat} 无效：${fail}`);
+                } catch (err) { alert('失败：'+err.message); }
+                document.getElementById('importExcel').value = '';
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function showLogRecord(){document.getElementById('logBox').innerText=operateLog.join('\n');document.getElementById('logModal').classList.remove('hidden');}
+        function closeLogModal(){document.getElementById('logModal').classList.add('hidden');}
+    </script>
+
+<!-- 🔥 全自动 GitHub 云端同步引擎（已填好你的信息） -->
+<script>
+const GITHUB_CONFIG = {
+  OWNER: "fengshou1988",
+  REPO: "fengshou1988.github.io",
+  BRANCH: "main",
+  TOKEN: "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",
+  FILE_PATH: "data.json"
+};
+
+let CLOUD_SYNC_READY = false;
+let isSyncing = false;
+
+function getAllLocalData() {
+  return {
+    customer: JSON.parse(localStorage.getItem('customerData') || '[]'),
+    flowRecord: JSON.parse(localStorage.getItem('flowData') || '[]'),
+    positionRecord: JSON.parse(localStorage.getItem('positionData') || '[]'),
+    signUsers: JSON.parse(localStorage.getItem('signUsers') || '{}'),
+    updatedAt: new Date().toLocaleString()
+  };
+}
+
+function saveAllDataToLocal(data) {
+  try {
+    localStorage.setItem('customerData', JSON.stringify(data.customer || []));
+    localStorage.setItem('flowData', JSON.stringify(data.flowRecord || []));
+    localStorage.setItem('positionData', JSON.stringify(data.positionRecord || []));
+    localStorage.setItem('signUsers', JSON.stringify(data.signUsers || {}));
+    console.log("✅ 从 GitHub 同步数据到本地成功");
+  } catch (e) {}
+}
+
+async function pullFromGitHub() {
+  if (!GITHUB_CONFIG.TOKEN) return;
+  try {
+    const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}?ref=${GITHUB_CONFIG.BRANCH}`;
+    const res = await fetch(api, { headers: { Authorization: `token ${GITHUB_CONFIG.TOKEN}` } });
+    const json = await res.json();
+    if (!json.content) return;
+    const decoded = atob(json.content.replace(/\n/g, ''));
+    const data = JSON.parse(decoded);
+    saveAllDataToLocal(data);
+    window.currentFileSha = json.sha;
+    return true;
+  } catch (e) {
+    console.log("ℹ️ GitHub 暂无数据，使用本地数据");
+    return false;
+  }
+}
+
+async function pushToGitHub() {
+  if (!GITHUB_CONFIG.TOKEN || isSyncing) return;
+  isSyncing = true;
+  try {
+    const data = getAllLocalData();
+    const content = btoa(JSON.stringify(data, null, 2));
+    const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`;
+    const body = {
+      message: `💾 自动同步数据 ${new Date().toLocaleString()}`,
+      content: content,
+      branch: GITHUB_CONFIG.BRANCH,
+      sha: window.currentFileSha || undefined
+    };
+    const res = await fetch(api, {
+      method: 'PUT',
+      headers: { Authorization: `token ${GITHUB_CONFIG.TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    const result = await res.json();
+    if (result.content) {
+      window.currentFileSha = result.content.sha;
+      console.log("✅ 数据已自动同步到 GitHub");
+    }
+  } catch (e) {
+    console.error("❌ 同步失败", e);
+  } finally { isSyncing = false; }
+}
+
+async function initCloudSync() {
+  await pullFromGitHub();
+  CLOUD_SYNC_READY = true;
+  const originalSave = window.saveData;
+  window.saveData = function() {
+    originalSave?.call(this);
+    pushToGitHub();
+  };
+  console.log("🚀 GitHub 全自动同步已启动");
+}
+
+window.addEventListener('load', () => {
+  setTimeout(initCloudSync, 1000);
+});
+</script>
+</body>
+</html>
