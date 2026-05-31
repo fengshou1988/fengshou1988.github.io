@@ -645,10 +645,27 @@
       "bankUser": "杨冬雪",
       "bankRemark": "昆明农联社",
       "address": "河北省 保定市 容城县 解放路977号"
+    },
+    {
+      "id": "1780229371667",
+      "date": "2026-05-31",
+      "name": "李育浩",
+      "nick": "林间晚风",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "19136738789",
+      "area": "湖北省",
+      "group": "大群",
+      "status": "虚拟",
+      "bankCard": "6223398597250923",
+      "bankName": "湖北省",
+      "bankUser": "李育浩",
+      "bankRemark": "鄞州农村合作银行",
+      "address": "湖北省 十堰市 郧西县 凤仪东路55号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:08:23"
+  "updatedAt": "2026/5/31 20:09:31"
 }
