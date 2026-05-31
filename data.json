@@ -866,10 +866,27 @@
       "bankUser": "郑贤科",
       "bankRemark": "商业银行",
       "address": "河南省 平顶山市 宝丰县 江大南路47号"
+    },
+    {
+      "id": "1780231684695",
+      "date": "2026-05-31",
+      "name": "倪骞",
+      "nick": "闲云野鹤",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "18709166154",
+      "area": "湖南省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "9558889196546652",
+      "bankName": "湖南省",
+      "bankUser": "倪骞",
+      "bankRemark": "工商银行",
+      "address": "湖南省 长沙市 长沙县 辽宁路664号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:47:05"
+  "updatedAt": "2026/5/31 20:48:04"
 }
