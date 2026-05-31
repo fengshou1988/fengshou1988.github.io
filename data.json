@@ -777,7 +777,7 @@
       "group": "备用",
       "status": "虚拟",
       "bankCard": "8880006216343827",
-      "bankName": "山东省",
+      "bankName": "贵阳市",
       "bankUser": "潘恬恬",
       "bankRemark": "贵阳市商业银行",
       "address": "山东省 德州市平原县 机场路900号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:13:32"
+  "updatedAt": "2026/5/31 21:13:41"
 }
