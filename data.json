@@ -981,7 +981,7 @@
       "group": "小群",
       "status": "虚拟",
       "bankCard": "6223453586078029172",
-      "bankName": "贵州省",
+      "bankName": "成都",
       "bankUser": "家宇",
       "bankRemark": "成都农信社",
       "address": "贵州省 遵义市 习水县 中华西路545号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:14:46"
+  "updatedAt": "2026/5/31 21:15:00"
 }
