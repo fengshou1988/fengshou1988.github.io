@@ -607,7 +607,7 @@
       "group": "大群",
       "status": "虚拟",
       "bankCard": "6223221443835350",
-      "bankName": "湖南省",
+      "bankName": "顺德",
       "bankUser": "蓝默",
       "bankRemark": "顺德农信社",
       "address": "湖南省 张家界市 桑植县 沣惠北路180号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:11:43"
+  "updatedAt": "2026/5/31 21:11:56"
 }
