@@ -74,17 +74,17 @@
 </head>
 <body class="bg-transparent">
 
-    <div id="tokenPanel" class="bg-white rounded shadow p-1 text-[10px] fixed top-2 right-2 w-[380px] z-50">
-    <div class="flex justify-between items-center font-bold mb-0.5 text-[11px]">
+    <div id="tokenPanel" class="bg-white rounded shadow p-2 text-sm fixed right-3 top-3 w-[400px] z-9999">
+    <div class="flex justify-between items-center font-bold mb-1 text-base">
         <span>GitHub同步令牌设置</span>
         <span class="font-normal text-gray-500">同步状态：未设置 | 令牌仅本地保存</span>
     </div>
-    <div class="flex gap-0.5 flex-wrap items-center">
-        <input id="githubTokenInput" type="text" placeholder="GitHub PAT令牌" class="border px-1 py-0.5 rounded flex-1 min-w-[120px] text-[10px]">
-        <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-1 py-0.5 rounded text-[10px]">保存</button>
-        <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-1 py-0.5 rounded text-[10px]">清除</button>
-        <button onclick="testGitHubSync()" class="bg-blue-600 text-white px-1 py-0.5 rounded text-[10px]">测试</button>
-        <button onclick="manualPushToGitHub()" class="bg-purple-600 text-white px-1 py-0.5 rounded text-[10px]">同步</button>
+    <div class="flex gap-1 flex-wrap items-center">
+        <input id="githubTokenInput" type="text" placeholder="GitHub PAT令牌" class="border px-2 py-1 rounded flex-1 min-w-[120px] text-sm">
+        <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-2 py-1 rounded text-sm">保存</button>
+        <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-2 py-1 rounded text-sm">清除</button>
+        <button onclick="testGitHubSync()" class="bg-blue-600 text-white px-2 py-1 rounded text-sm">测试</button>
+        <button onclick="manualPushToGitHub()" class="bg-purple-600 text-white px-2 py-1 rounded text-sm">同步</button>
     </div>
 </div>
 
@@ -121,7 +121,7 @@
                 </select>
                 <button onclick="renderList()" class="bg-blue-500 text-white px-4 py-2 rounded">搜索查询</button>
                 <button onclick="resetFilter()" class="bg-gray-500 text-white px-4 py-2 rounded">重置</button>
-                <button onclick="toggleTokenPanel()" class="bg-yellow-500 text-white px-3 py-2 rounded">设置同步令牌</button>
+                <button onclick="toggleTokenPanel()" class="bg-yellow-500 text-white px-3 py-2 rounded">设置同步</button>
             </div>
         </div>
 
