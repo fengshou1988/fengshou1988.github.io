@@ -74,18 +74,19 @@
 </head>
 <body class="bg-transparent">
 
-    <div id="tokenPanel" class="bg-white rounded shadow mb-4">
-        <div class="font-bold mb-2">GitHub 云端同步令牌设置（仅自己可见）</div>
-        <div class="flex gap-2 flex-wrap items-center">
-            <input id="githubTokenInput" type="text" placeholder="粘贴你的 GitHub PAT 令牌" class="border px-3 py-2 rounded flex-1 min-w-[200px]">
-            <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-3 py-2 rounded">保存令牌</button>
-            <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-3 py-2 rounded">清除令牌</button>
-            <button onclick="testGitHubSync()" class="bg-blue-600 text-white px-3 py-2 rounded">测试同步</button>
-            <button onclick="manualPushToGitHub()" class="bg-purple-600 text-white px-3 py-2 rounded">手动同步</button>
-        </div>
-        <div class="text-xs text-gray-500 mt-1">令牌仅保存在本地浏览器，不会上传到仓库</div>
-        <div id="syncStatus" class="sync-status text-sm">同步状态：未设置令牌</div>
+    <div id="tokenPanel" class="bg-white rounded shadow p-1 text-[10px] fixed top-2 right-2 w-[380px] z-50">
+    <div class="flex justify-between items-center font-bold mb-0.5 text-[11px]">
+        <span>GitHub同步令牌设置</span>
+        <span class="font-normal text-gray-500">同步状态：未设置 | 令牌仅本地保存</span>
     </div>
+    <div class="flex gap-0.5 flex-wrap items-center">
+        <input id="githubTokenInput" type="text" placeholder="GitHub PAT令牌" class="border px-1 py-0.5 rounded flex-1 min-w-[120px] text-[10px]">
+        <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-1 py-0.5 rounded text-[10px]">保存</button>
+        <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-1 py-0.5 rounded text-[10px]">清除</button>
+        <button onclick="testGitHubSync()" class="bg-blue-600 text-white px-1 py-0.5 rounded text-[10px]">测试</button>
+        <button onclick="manualPushToGitHub()" class="bg-purple-600 text-white px-1 py-0.5 rounded text-[10px]">同步</button>
+    </div>
+</div>
 
     <div class="container mx-auto px-3 py-5 max-w-7xl">
         <h1 class="text-[68px] font-bold text-center mb-10" style="font-family:'华文行楷',sans-serif; color: #111;">🪙 丰收信息系统 🪙</h1>
@@ -94,7 +95,7 @@
             <div>总客户数<br><span id="totalCustomer" class="text-lg font-bold text-blue-600">0</span></div>
             <div>累计充值总额<br><span id="totalRecharge" class="text-lg font-bold text-blue-600">0.00</span></div>
             <div>累计提现总额<br><span id="totalWithdraw" class="text-lg font-bold text-blue-600">0.00</span></div>
-            <div class="text-3xl font-bold">客户总余额<br><span id="totalBalance" class="text-3xl font-bold text-red-600">0.00</span></div>
+            <div class="text-2xl font-bold">客户总余额<br><span id="totalBalance" class="text-2xl font-bold text-red-600">0.00</span></div>
             <div>接待员统计<br><span id="receptionStats" class="text-lg font-bold text-blue-600">0</span></div>
         </div>
 
@@ -210,8 +211,8 @@
         <div><label class="text-sm">原始价</label><input id="calc_price" type="number" step="0.0001" placeholder="输入原始价" class="w-full border p-2 rounded"></div>
         <div><label class="text-sm">折扣（0.8=8折）</label><input id="calc_discount" type="number" step="0.0001" placeholder="输入折扣" class="w-full border p-2 rounded"></div>
         <div><label class="text-sm">仓位资金</label><input id="calc_money" type="number" step="0.0001" placeholder="输入资金金额" class="w-full border p-2 rounded"></div>
-        <div><label class="text-sm">仓位百分比（%）</label><input id="calc_pos" type="number" step="0.01" placeholder="输入仓位比例" class="w-full border p-2 rounded"></div>
-        <div><label class="text-sm">收益百分比（%）</label><input id="calc_profit" type="number" step="0.01" placeholder="输入收益比例" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">中签仓位百分比 例如：60=60%=六层仓</label><input id="calc_pos" type="number" step="0.01" placeholder="输入仓位比例" class="w-full border p-2 rounded"></div>
+        <div><label class="text-sm">收益百分比 例如：200=200%=两倍</label><input id="calc_profit" type="number" step="0.01" placeholder="输入收益比例" class="w-full border p-2 rounded"></div>
         <div class="flex gap-3">
             <button onclick="doCalc()" class="flex-1 bg-blue-500 text-white p-2 rounded">计算</button>
             <button onclick="resetCalc()" class="flex-1 bg-gray-400 text-white p-2 rounded">清空</button>
@@ -220,9 +221,9 @@
         <div class="p-3 bg-gray-100 rounded mt-3 space-y-1 text-sm">
             <p>✅ 折后价：<span id="res1" class="font-bold text-green-600">0.00</span></p>
             <p>✅ 未全仓中签收益：<span id="res2" class="font-bold text-green-600">0.00</span></p>
-            <p>✅ 未全仓中签最终收益：<span id="res3" class="font-bold text-red-600">0.00</span></p>
+            <p>✅ 未全仓中签最终仓位：<span id="res3" class="font-bold text-red-600">0.00</span></p>
             <p>✅ 全仓中签收益：<span id="res4" class="font-bold text-green-600">0.00</span></p>
-            <p>✅ 全仓中签最终收益：<span id="res5" class="font-bold text-red-600">0.00</span></p>
+            <p>✅ 全仓中签最终仓位：<span id="res5" class="font-bold text-red-600">0.00</span></p>
             <p>✅ 可申购股数：<span id="res6" class="font-bold text-blue-600">0</span></p>
             <p>✅ 可申购股数（推荐）：<span id="res7" class="font-bold text-blue-600">0</span></p>
         </div>
