@@ -1002,10 +1002,27 @@
       "bankUser": "赖桂萍",
       "bankRemark": "柳州市商业银行",
       "address": "甘肃省 兰州市 永登县 金华路876号"
+    },
+    {
+      "id": "1780232487053",
+      "date": "2026-05-31",
+      "name": "段尚",
+      "nick": "时光里的从容",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "17170908334",
+      "area": "江苏省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "6223429386783885666",
+      "bankName": "攀枝花市",
+      "bankUser": "段尚",
+      "bankRemark": "攀枝花市商业银行",
+      "address": "江苏省 盐城市 滨海县 胜利路226号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:00:07"
+  "updatedAt": "2026/5/31 21:01:27"
 }
