@@ -1104,10 +1104,27 @@
       "bankUser": "杨平德",
       "bankRemark": "贵阳市商业银行",
       "address": "福建省 漳州市 诏安县 人民路175号"
+    },
+    {
+      "id": "1780232900456",
+      "date": "2026-05-31",
+      "name": "叶兆言",
+      "nick": "漫步红尘且从容",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "13272331316",
+      "area": "河北省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "6223333095373109",
+      "bankName": "东莞市",
+      "bankUser": "叶兆言",
+      "bankRemark": "东莞市商业银行",
+      "address": "河北省 沧州市 东光县 东环路756号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:07:24"
+  "updatedAt": "2026/5/31 21:08:20"
 }
