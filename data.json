@@ -951,10 +951,27 @@
       "bankUser": "陆梦琦",
       "bankRemark": "浦东发展银行",
       "address": "河北省 邯郸市 成安县 文化路587号"
+    },
+    {
+      "id": "1780232268942",
+      "date": "2026-05-31",
+      "name": "宁学源",
+      "nick": "闲品岁月茶香",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "17273438002",
+      "area": "辽宁省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "4427297133372903",
+      "bankName": "辽宁省",
+      "bankUser": "宁学源",
+      "bankRemark": "中信实业银行",
+      "address": "辽宁省 抚顺市 抚顺县 文锋路551号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:56:28"
+  "updatedAt": "2026/5/31 20:57:48"
 }
