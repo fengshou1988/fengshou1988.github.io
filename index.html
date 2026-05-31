@@ -15,6 +15,7 @@
             background: #e6f7ff;
             min-height: 100vh;
             color: #222;
+            padding-top: 80px; /* 给固定面板留位置 */
         }
         .table-wrap {
             overflow-x: auto;
@@ -53,22 +54,35 @@
         @keyframes fadeInOut {
             0% { opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; }
         }
+
+        /* 🔥 固定令牌面板，永不抖动、永远不挤压页面 */
+        #tokenPanel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: white;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
     </style>
 </head>
 <body class="bg-transparent">
+
+    <!-- 🔑 固定在顶部：令牌设置面板（默认显示，不抖动） -->
+    <div id="tokenPanel" class="bg-white rounded shadow mb-4">
+        <div class="font-bold mb-2">GitHub 云端同步令牌设置（仅自己可见）</div>
+        <div class="flex gap-2 flex-wrap items-center">
+            <input id="githubTokenInput" type="text" placeholder="粘贴你的 GitHub PAT 令牌" class="border px-3 py-2 rounded flex-1 min-w-[200px]">
+            <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-3 py-2 rounded">保存令牌</button>
+            <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-3 py-2 rounded">清除令牌</button>
+        </div>
+        <div class="text-xs text-gray-500 mt-1">令牌仅保存在本地浏览器，不会上传到仓库</div>
+    </div>
+
     <div class="container mx-auto px-3 py-5 max-w-7xl">
         <h1 class="text-[68px] font-bold text-center mb-10" style="font-family:'华文行楷',sans-serif; color: #111;">🪙 丰收信息系统 🪙</h1>
-
-        <!-- 🔑 安全 Token 设置面板（默认隐藏） -->
-        <div id="tokenPanel" class="bg-white rounded shadow p-4 mb-4 hidden">
-            <div class="font-bold mb-2">GitHub 云端同步令牌设置（仅自己可见）</div>
-            <div class="flex gap-2 flex-wrap">
-                <input id="githubTokenInput" type="text" placeholder="粘贴你的 GitHub PAT 令牌" class="border px-3 py-2 rounded flex-1 min-w-[200px]">
-                <button onclick="saveGitHubToken()" class="bg-green-600 text-white px-3 py-2 rounded">保存令牌</button>
-                <button onclick="clearGitHubToken()" class="bg-red-500 text-white px-3 py-2 rounded">清除令牌</button>
-            </div>
-            <div class="text-xs text-gray-500 mt-1">令牌仅保存在本地浏览器，不会上传到仓库</div>
-        </div>
 
         <div class="bg-white rounded shadow p-4 mb-4 grid grid-cols-2 md:grid-cols-5 gap-3 text-center">
             <div>总客户数<br><span id="totalCustomer" class="text-lg font-bold text-blue-600">0</span></div>
@@ -313,7 +327,7 @@
             loadGitHubToken();
         }
 
-        // 显示/隐藏令牌设置面板
+        // 显示/隐藏令牌面板（现在是固定顶栏，不抖动）
         function toggleTokenPanel() {
             const panel = document.getElementById('tokenPanel');
             panel.classList.toggle('hidden');
@@ -427,7 +441,7 @@
                     <td class="border p-1">${item.discount}</td>
                     <td class="border p-1">${item.money}</td>
                     <td class="border p-1">${item.pos}%</td>
-                    <td class="border p-1">${item.profit}%</td>
+                    <th class="border p-1">${item.profit}%</th>
                     <td class="border p-1 text-green-600">${item.res1}</td>
                     <td class="border p-1">${item.res2}</td>
                     <td class="border p-1 text-red-600">${item.res3}</td>
@@ -806,4 +820,54 @@
       try {
         const data = getAllLocalData();
         const content = btoa(JSON.stringify(data, null, 2));
-        const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE
+        const api = `https://api.github.com/repos/${GITHUB_CONFIG.OWNER}/${GITHUB_CONFIG.REPO}/contents/${GITHUB_CONFIG.FILE_PATH}`;
+        
+        const body = {
+          message: "自动同步客户数据",
+          content: content,
+          branch: GITHUB_CONFIG.BRANCH
+        };
+        
+        if (currentFileSha) body.sha = currentFileSha;
+
+        const res = await fetch(api, {
+          method: "PUT",
+          headers: {
+            "Authorization": `token ${GITHUB_TOKEN}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        });
+
+        const result = await res.json();
+        if (result.content) {
+          currentFileSha = result.content.sha;
+          console.log("✅ 数据已同步到 GitHub");
+        }
+      } catch (e) {
+        console.error("同步失败", e);
+      }
+      isSyncing = false;
+    }
+
+    // 页面加载后自动拉取云端数据
+    window.addEventListener('load', async () => {
+      await pullFromGitHub();
+      
+      // 监听数据变化自动同步
+      const originalSetItem = localStorage.setItem;
+      localStorage.setItem = function(key, value) {
+        originalSetItem.call(this, key, value);
+        if ([
+          'customerData',
+          'flowData',
+          'positionData',
+          'signUsers'
+        ].includes(key)) {
+          pushToGitHub();
+        }
+      };
+    });
+    </script>
+</body>
+</html>
