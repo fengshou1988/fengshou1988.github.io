@@ -713,10 +713,27 @@
       "bankUser": "赵艾",
       "bankRemark": "星展银行",
       "address": "湖北省 咸宁市 崇阳县 幸福路155号"
+    },
+    {
+      "id": "1780230806841",
+      "date": "2026-05-31",
+      "name": "杨承军",
+      "nick": "人间观察员",
+      "channel": "起飞",
+      "reception": "毅晨",
+      "phone": "16664586529",
+      "area": "四川省",
+      "group": "备用",
+      "status": "虚拟",
+      "bankCard": "4720683180307765",
+      "bankName": "四川省",
+      "bankUser": "杨承军",
+      "bankRemark": "民生银行",
+      "address": "四川省 乐山市 沐川县 滨河路846号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:30:03"
+  "updatedAt": "2026/5/31 20:33:26"
 }
