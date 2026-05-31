@@ -934,10 +934,27 @@
       "bankUser": "李荣秀",
       "bankRemark": "商业银行",
       "address": "广东省 梅州市 平远县 马鞍东路903号"
+    },
+    {
+      "id": "1780232188214",
+      "date": "2026-05-31",
+      "name": "陆梦琦",
+      "nick": "澄怀",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "16424172264",
+      "area": "河北省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "8704000072241005",
+      "bankName": "河北省",
+      "bankUser": "陆梦琦",
+      "bankRemark": "浦东发展银行",
+      "address": "河北省 邯郸市 成安县 文化路587号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:53:19"
+  "updatedAt": "2026/5/31 20:56:28"
 }
