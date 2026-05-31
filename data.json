@@ -798,10 +798,27 @@
       "bankUser": "刘青藜",
       "bankRemark": "建设银行",
       "address": "贵州省 遵义市 湄潭县 长兴路486号"
+    },
+    {
+      "id": "1780231256240",
+      "date": "2026-05-31",
+      "name": "李元宗",
+      "nick": "岁月的沉淀",
+      "channel": "起飞",
+      "reception": "毅晨",
+      "phone": "14596600828",
+      "area": "福建省",
+      "group": "备用",
+      "status": "虚拟",
+      "bankCard": "6222604957145549858",
+      "bankName": "福建省",
+      "bankUser": "李元宗",
+      "bankRemark": "交通银行",
+      "address": "福建省 福州市 连江县 清河路877号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:39:43"
+  "updatedAt": "2026/5/31 20:40:56"
 }
