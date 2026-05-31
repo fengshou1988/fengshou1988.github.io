@@ -917,10 +917,27 @@
       "bankUser": "钱容容",
       "bankRemark": "兴业银行",
       "address": "湖北省 黄冈市 浠水县 宝庆中路713号"
+    },
+    {
+      "id": "1780231999646",
+      "date": "2026-05-31",
+      "name": "李荣秀",
+      "nick": "流年自有芬芳",
+      "channel": "财神",
+      "reception": "毅晨",
+      "phone": "16710668822",
+      "area": "广东省",
+      "group": "小群",
+      "status": "虚拟",
+      "bankCard": "6223166748810436",
+      "bankName": "广东省",
+      "bankUser": "李荣秀",
+      "bankRemark": "商业银行",
+      "address": "广东省 梅州市 平远县 马鞍东路903号"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:52:00"
+  "updatedAt": "2026/5/31 20:53:19"
 }
