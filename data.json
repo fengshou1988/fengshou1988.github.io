@@ -760,7 +760,7 @@
       "group": "备用",
       "status": "虚拟",
       "bankCard": "62233685203213449",
-      "bankName": "安徽省",
+      "bankName": "包头市",
       "bankUser": "润菲",
       "bankRemark": "包头市商业银行",
       "address": "安徽省 安庆市 太湖县 滨河路881号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:13:22"
+  "updatedAt": "2026/5/31 21:13:32"
 }
