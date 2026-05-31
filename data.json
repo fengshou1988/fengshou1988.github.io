@@ -743,7 +743,7 @@
       "group": "备用",
       "status": "虚拟",
       "bankCard": "6223162925641819",
-      "bankName": "河源市",
+      "bankName": "宁波市",
       "bankUser": "钟晓钰",
       "bankRemark": "宁波市商业银行",
       "address": "河源市 河源市 紫金县 灌婴路165号"
@@ -1143,5 +1143,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:13:12"
+  "updatedAt": "2026/5/31 21:13:22"
 }
