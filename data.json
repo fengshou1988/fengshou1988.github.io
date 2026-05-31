@@ -543,27 +543,10 @@
       "bankUser": "钟正良",
       "bankRemark": "中信银行",
       "address": "江西省新余市分宜县鸿兴路96号"
-    },
-    {
-      "id": "1780227879708",
-      "date": "2026-06-01",
-      "name": "1111",
-      "nick": "1111",
-      "channel": "1111",
-      "reception": "毅晨",
-      "phone": "1111",
-      "area": "1111",
-      "group": "1111",
-      "status": "1111",
-      "bankCard": "1111",
-      "bankName": "1111",
-      "bankUser": "1111",
-      "bankRemark": "1111",
-      "address": "1111"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 20:00:37"
+  "updatedAt": "2026/5/31 20:00:42"
 }
