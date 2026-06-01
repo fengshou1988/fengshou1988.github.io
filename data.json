@@ -99,10 +99,11 @@
     },
     {
       "id": "1780154273855zbtguu",
-      "date": "2026-05-30",
+      "date": "",
       "name": "吕雨晴",
       "nick": "开心果",
       "channel": "宣传",
+      "reception": "丰收",
       "phone": "14785031871",
       "area": "山西省",
       "group": "大群",
@@ -1169,5 +1170,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:30:45"
+  "updatedAt": "2026/6/1 09:30:51"
 }
