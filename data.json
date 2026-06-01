@@ -466,10 +466,11 @@
     },
     {
       "id": "1780154273855ueuv3y",
-      "date": "2026-05-30",
+      "date": "",
       "name": "王雪菊",
       "nick": "耕心静待岁丰",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13873453980",
       "area": "福建省",
       "group": "小群",
@@ -1147,5 +1148,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:28:20"
+  "updatedAt": "2026/6/1 09:28:26"
 }
