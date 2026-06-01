@@ -162,10 +162,11 @@
     },
     {
       "id": "17801542738550ma4e8",
-      "date": "2026-05-30",
+      "date": "",
       "name": "任建飞",
       "nick": "夕阳红",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "14545509401",
       "area": "河北省",
       "group": "小群",
@@ -1164,5 +1165,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:30:14"
+  "updatedAt": "2026/6/1 09:30:20"
 }
