@@ -34,10 +34,11 @@
     },
     {
       "id": "17801542738559c23t1",
-      "date": "2026-05-30",
+      "date": "",
       "name": "李世升",
       "nick": "时来运转",
       "channel": "宣传",
+      "reception": "丰收",
       "phone": "15144465098",
       "area": "吉林省",
       "group": "大群",
@@ -1171,5 +1172,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:30:58"
+  "updatedAt": "2026/6/1 09:31:04"
 }
