@@ -306,10 +306,11 @@
     },
     {
       "id": "17801542738557cnza2",
-      "date": "2026-05-30",
+      "date": "",
       "name": "孙传君",
       "nick": "企鹅",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13127769341",
       "area": "福建省",
       "group": "小群",
@@ -1155,5 +1156,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:29:18"
+  "updatedAt": "2026/6/1 09:29:26"
 }
