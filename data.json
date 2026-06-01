@@ -221,10 +221,11 @@
     },
     {
       "id": "1780154273855l9zere",
-      "date": "2026-05-30",
+      "date": "",
       "name": "陈伟华",
       "nick": "明辨是非",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "19890219834",
       "area": "河南省",
       "group": "小群",
@@ -1174,5 +1175,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:32:22"
+  "updatedAt": "2026/6/1 09:32:29"
 }
