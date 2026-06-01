@@ -370,10 +370,11 @@
     },
     {
       "id": "1780154273855j5unoy",
-      "date": "2026-05-30",
+      "date": "",
       "name": "杜月琳",
       "nick": "薰衣草",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13976251835",
       "area": "山东省",
       "group": "小群",
@@ -1151,5 +1152,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:28:45"
+  "updatedAt": "2026/6/1 09:28:55"
 }
