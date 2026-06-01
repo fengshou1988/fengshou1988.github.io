@@ -130,10 +130,11 @@
     },
     {
       "id": "17801542738557bl7l9",
-      "date": "2026-05-30",
+      "date": "",
       "name": "周传祥",
       "nick": "闲居",
       "channel": "宣传",
+      "reception": "丰收",
       "phone": "15818849013",
       "area": "吉林省",
       "group": "大群",
@@ -1165,5 +1166,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:30:20"
+  "updatedAt": "2026/6/1 09:30:25"
 }
