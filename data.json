@@ -226,10 +226,11 @@
     },
     {
       "id": "17801542738558no3dz",
-      "date": "2026-05-30",
+      "date": "",
       "name": "林婉芬",
       "nick": "幽兰",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "15485748067",
       "area": "江苏省",
       "group": "小群",
@@ -1161,5 +1162,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:29:56"
+  "updatedAt": "2026/6/1 09:30:03"
 }
