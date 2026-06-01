@@ -395,10 +395,11 @@
     },
     {
       "id": "1780154273855zgl4b1",
-      "date": "2026-05-30",
+      "date": "",
       "name": "吴学书",
       "nick": "归去逐回",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13808760932",
       "area": "陕西省",
       "group": "小群",
@@ -1160,5 +1161,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:29:51"
+  "updatedAt": "2026/6/1 09:29:56"
 }
