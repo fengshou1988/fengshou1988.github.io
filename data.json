@@ -482,10 +482,11 @@
     },
     {
       "id": "1780154273855a8msw1",
-      "date": "2026-05-30",
+      "date": "",
       "name": "马西宁",
       "nick": "沧桑过后正年轻",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13882466485",
       "area": "浙江省",
       "group": "小群",
@@ -1146,5 +1147,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:28:10"
+  "updatedAt": "2026/6/1 09:28:20"
 }
