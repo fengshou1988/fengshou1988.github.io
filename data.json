@@ -514,10 +514,11 @@
     },
     {
       "id": "1780154273855o4nm62",
-      "date": "2026-05-30",
+      "date": "",
       "name": "郝长鹏",
       "nick": "一杯敬自由",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13894211720",
       "area": "河南省",
       "group": "小群",
@@ -1144,5 +1145,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:27:52"
+  "updatedAt": "2026/6/1 09:28:03"
 }
