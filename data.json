@@ -530,10 +530,11 @@
     },
     {
       "id": "17801542738550nd4mu",
-      "date": "2026-05-30",
+      "date": "",
       "name": "钟正良",
       "nick": "敢于承担",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13838253642",
       "area": "江西省",
       "group": "小群",
@@ -1143,5 +1144,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/5/31 21:17:09"
+  "updatedAt": "2026/6/1 09:27:52"
 }
