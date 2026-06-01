@@ -322,10 +322,11 @@
     },
     {
       "id": "1780154273855ef13ym",
-      "date": "2026-05-30",
+      "date": "",
       "name": "段俊如",
       "nick": "海豚书生",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "16382180344",
       "area": "安徽省",
       "group": "小群",
@@ -1153,5 +1154,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:29:01"
+  "updatedAt": "2026/6/1 09:29:12"
 }
