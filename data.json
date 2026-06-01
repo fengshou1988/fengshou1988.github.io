@@ -418,10 +418,11 @@
     },
     {
       "id": "1780154273855jt1r67",
-      "date": "2026-05-30",
+      "date": "",
       "name": "张睿婕",
       "nick": "雅痞男人",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13880313980",
       "area": "山东省",
       "group": "小群",
@@ -1150,5 +1151,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:28:38"
+  "updatedAt": "2026/6/1 09:28:45"
 }
