@@ -66,10 +66,11 @@
     },
     {
       "id": "1780154273855uz6v4w",
-      "date": "2026-05-30",
+      "date": "",
       "name": "曾桂娇",
       "nick": "温暖向阳",
       "channel": "宣传",
+      "reception": "丰收",
       "phone": "15747992954",
       "area": "云南省",
       "group": "大群",
@@ -1168,5 +1169,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:30:38"
+  "updatedAt": "2026/6/1 09:30:45"
 }
