@@ -339,10 +339,11 @@
     },
     {
       "id": "1780154273855vkx5do",
-      "date": "2026-05-30",
+      "date": "",
       "name": "陈雪贞",
       "nick": "一米阳光",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13687351399",
       "area": "河北省",
       "group": "小群",
@@ -1154,5 +1155,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:29:12"
+  "updatedAt": "2026/6/1 09:29:18"
 }
