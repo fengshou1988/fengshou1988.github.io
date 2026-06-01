@@ -424,10 +424,11 @@
     },
     {
       "id": "17801542738552qu0qr",
-      "date": "2026-05-30",
+      "date": "",
       "name": "高维强",
       "nick": "国士无双",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13878225372",
       "area": "安徽省",
       "group": "小群",
@@ -1173,5 +1174,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:31:10"
+  "updatedAt": "2026/6/1 09:32:22"
 }
