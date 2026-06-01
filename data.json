@@ -2,7 +2,7 @@
   "customer": [
     {
       "id": "1780154273855y198vr",
-      "date": "",
+      "date": "2026-06-28",
       "name": "王佳航",
       "nick": "平安是福",
       "channel": "宣传",
@@ -1177,5 +1177,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:32:43"
+  "updatedAt": "2026/6/1 09:32:54"
 }
