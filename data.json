@@ -354,10 +354,11 @@
     },
     {
       "id": "1780154273855y0nftb",
-      "date": "2026-05-30",
+      "date": "",
       "name": "王丽东",
       "nick": "信仰",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13127623189",
       "area": "广东省",
       "group": "小群",
@@ -1152,5 +1153,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:28:55"
+  "updatedAt": "2026/6/1 09:29:01"
 }
