@@ -434,10 +434,11 @@
     },
     {
       "id": "1780154273855lxh1dd",
-      "date": "2026-05-30",
+      "date": "",
       "name": "高成红",
       "nick": "媛心雅岁",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "13802401335",
       "area": "河北省",
       "group": "小群",
@@ -1149,5 +1150,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:28:32"
+  "updatedAt": "2026/6/1 09:28:38"
 }
