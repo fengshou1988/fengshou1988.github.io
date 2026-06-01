@@ -194,10 +194,11 @@
     },
     {
       "id": "17801542738551bnd9z",
-      "date": "2026-05-30",
+      "date": "",
       "name": "车三平",
       "nick": "松林",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "17957614057",
       "area": "甘肃省",
       "group": "小群",
@@ -1162,5 +1163,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:30:03"
+  "updatedAt": "2026/6/1 09:30:08"
 }
