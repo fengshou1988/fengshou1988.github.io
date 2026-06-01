@@ -178,10 +178,11 @@
     },
     {
       "id": "1780154273855x2s3rf",
-      "date": "2026-05-30",
+      "date": "",
       "name": "沈玉美",
       "nick": "樱花",
       "channel": "财神",
+      "reception": "丰收",
       "phone": "17710723791",
       "area": "河南省",
       "group": "小群",
@@ -1163,5 +1164,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:30:08"
+  "updatedAt": "2026/6/1 09:30:14"
 }
