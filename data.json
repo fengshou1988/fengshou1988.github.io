@@ -1172,10 +1172,27 @@
       "bankUser": "石秀秀",
       "bankRemark": "张家港市农村商业银行",
       "address": "黑龙江省 佳木斯市 汤原县 解放路505号"
+    },
+    {
+      "id": "1781611819549",
+      "date": "2026-06-06",
+      "name": "12",
+      "nick": "21212",
+      "channel": "12",
+      "reception": "丰收",
+      "phone": "12",
+      "area": "12",
+      "group": "12",
+      "status": "12",
+      "bankCard": "12",
+      "bankName": "12",
+      "bankUser": "12",
+      "bankRemark": "12",
+      "address": "12"
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/1 09:35:48"
+  "updatedAt": "2026/6/16 20:10:19"
 }
