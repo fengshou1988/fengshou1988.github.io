@@ -1226,14 +1226,14 @@
     },
     {
       "id": "1782176674170",
-      "date": "",
+      "date": "2026-06-23",
       "name": "",
       "nick": "51482844017",
-      "channel": "",
+      "channel": "百家",
       "reception": "",
       "phone": "18062356263",
       "area": "",
-      "group": "654",
+      "group": "653",
       "status": "",
       "bankCard": "",
       "bankName": "",
@@ -1262,5 +1262,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/23 09:06:06"
+  "updatedAt": "2026/6/23 09:06:20"
 }
