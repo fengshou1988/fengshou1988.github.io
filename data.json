@@ -1174,23 +1174,6 @@
       "address": "黑龙江省 佳木斯市 汤原县 解放路505号"
     },
     {
-      "id": "1781611819549",
-      "date": "2026-06-16",
-      "name": "12",
-      "nick": "21212",
-      "channel": "12",
-      "reception": "丰收",
-      "phone": "12",
-      "area": "12",
-      "group": "12",
-      "status": "12",
-      "bankCard": "12",
-      "bankName": "12",
-      "bankUser": "12",
-      "bankRemark": "12",
-      "address": "12"
-    },
-    {
       "id": "1782176452853",
       "date": "2026-06-23",
       "name": "潘",
@@ -1279,5 +1262,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/23 09:05:30"
+  "updatedAt": "2026/6/23 09:05:47"
 }
