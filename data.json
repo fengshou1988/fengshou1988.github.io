@@ -1240,10 +1240,27 @@
       "bankUser": "",
       "bankRemark": "",
       "address": ""
+    },
+    {
+      "id": "1782176674170",
+      "date": "",
+      "name": "",
+      "nick": "51482844017",
+      "channel": "",
+      "reception": "",
+      "phone": "18062356263",
+      "area": "",
+      "group": "654",
+      "status": "",
+      "bankCard": "",
+      "bankName": "",
+      "bankUser": "",
+      "bankRemark": "",
+      "address": ""
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/23 09:04:17"
+  "updatedAt": "2026/6/23 09:04:34"
 }
