@@ -1206,10 +1206,27 @@
       "bankUser": "",
       "bankRemark": "",
       "address": "辽宁省大连市开发区湾里东小区"
+    },
+    {
+      "id": "1782176633825",
+      "date": "",
+      "name": "",
+      "nick": "34853992409",
+      "channel": "",
+      "reception": "",
+      "phone": "13935866936",
+      "area": "",
+      "group": "651",
+      "status": "",
+      "bankCard": "",
+      "bankName": "",
+      "bankUser": "",
+      "bankRemark": "",
+      "address": ""
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/23 09:03:30"
+  "updatedAt": "2026/6/23 09:03:53"
 }
