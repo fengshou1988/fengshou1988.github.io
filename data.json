@@ -1257,10 +1257,27 @@
       "bankUser": "",
       "bankRemark": "",
       "address": ""
+    },
+    {
+      "id": "1782176699785",
+      "date": "",
+      "name": "",
+      "nick": "73926918142",
+      "channel": "",
+      "reception": "",
+      "phone": "16704266431",
+      "area": "",
+      "group": "654",
+      "status": "",
+      "bankCard": "",
+      "bankName": "",
+      "bankUser": "",
+      "bankRemark": "",
+      "address": ""
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/23 09:04:34"
+  "updatedAt": "2026/6/23 09:04:59"
 }
