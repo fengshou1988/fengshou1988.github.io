@@ -1189,10 +1189,27 @@
       "bankUser": "12",
       "bankRemark": "12",
       "address": "12"
+    },
+    {
+      "id": "1782176452853",
+      "date": "",
+      "name": "潘",
+      "nick": "34853998509",
+      "channel": "百家",
+      "reception": "丰收",
+      "phone": "15578184858",
+      "area": "",
+      "group": "650",
+      "status": "",
+      "bankCard": "",
+      "bankName": "",
+      "bankUser": "",
+      "bankRemark": "",
+      "address": ""
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/20上午9:03:24"
+  "updatedAt": "2026/6/23 09:00:52"
 }
