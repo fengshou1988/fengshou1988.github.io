@@ -1223,10 +1223,27 @@
       "bankUser": "",
       "bankRemark": "",
       "address": ""
+    },
+    {
+      "id": "1782176657572",
+      "date": "2026-06-23",
+      "name": "",
+      "nick": "69272336599",
+      "channel": "",
+      "reception": "",
+      "phone": "18242246253",
+      "area": "",
+      "group": "652",
+      "status": "",
+      "bankCard": "",
+      "bankName": "",
+      "bankUser": "",
+      "bankRemark": "",
+      "address": ""
     }
   ],
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/23 09:03:53"
+  "updatedAt": "2026/6/23 09:04:17"
 }
