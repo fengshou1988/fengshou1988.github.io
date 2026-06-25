@@ -1191,40 +1191,6 @@
       "address": "辽宁省大连市开发区湾里东小区"
     },
     {
-      "id": "1782176633825",
-      "date": "2026-06-23",
-      "name": "",
-      "nick": "34853992409",
-      "channel": "百家",
-      "reception": "丰收",
-      "phone": "13935866936",
-      "area": "",
-      "group": "651",
-      "status": "",
-      "bankCard": "",
-      "bankName": "",
-      "bankUser": "",
-      "bankRemark": "",
-      "address": ""
-    },
-    {
-      "id": "1782176657572",
-      "date": "2026-06-23",
-      "name": "",
-      "nick": "69272336599",
-      "channel": "百家",
-      "reception": "丰收",
-      "phone": "18242246253",
-      "area": "",
-      "group": "652",
-      "status": "",
-      "bankCard": "",
-      "bankName": "",
-      "bankUser": "",
-      "bankRemark": "",
-      "address": ""
-    },
-    {
       "id": "1782176699785",
       "date": "2026-06-22",
       "name": "",
@@ -1245,5 +1211,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/25 13:43:09"
+  "updatedAt": "2026/6/25 13:43:12"
 }
