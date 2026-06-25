@@ -1225,23 +1225,6 @@
       "address": ""
     },
     {
-      "id": "1782176674170",
-      "date": "2026-06-23",
-      "name": "",
-      "nick": "51482844017",
-      "channel": "百家",
-      "reception": "丰收",
-      "phone": "18062356263",
-      "area": "",
-      "group": "653",
-      "status": "",
-      "bankCard": "",
-      "bankName": "",
-      "bankUser": "",
-      "bankRemark": "",
-      "address": ""
-    },
-    {
       "id": "1782176699785",
       "date": "2026-06-22",
       "name": "",
@@ -1262,5 +1245,5 @@
   "flowRecord": [],
   "positionRecord": [],
   "signUsers": {},
-  "updatedAt": "2026/6/25 13:43:01"
+  "updatedAt": "2026/6/25 13:43:09"
 }
